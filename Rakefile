@@ -15,7 +15,8 @@ yet ready for use with the current version of CrowdFlower.
 EOF
     gem.email = "brian@doloreslabs.com"
     gem.homepage = "http://github.com/dolores/ruby-crowdflower"
-    gem.authors = ["Brian P O'Rourke"]
+    gem.authors = ["Brian P O'Rourke", "Chris Van Pelt"]
+    gem.add_dependency 'httparty', '>= 0.4.4'
   end
 
 rescue LoadError

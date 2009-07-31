@@ -1,7 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-describe "RubyCrowdflower" do
-  it "is a placeholder" do
-    pending "there will be some behavior here eventually."
+describe CrowdFlower do
+  it "has examples" do
+    pending "they need to be ported to the gem package"
   end
 end
