@@ -28,6 +28,7 @@ yet ready for use with the current version of CrowdFlower.
      "lib/ruby-crowdflower.rb",
      "lib/ruby-crowdflower/crowdflower.rb",
      "lib/ruby-crowdflower/httparty.rb",
+     "ruby-crowdflower.gemspec",
      "spec/ruby-crowdflower_spec.rb",
      "spec/spec_helper.rb"
   ]
@@ -46,11 +47,11 @@ yet ready for use with the current version of CrowdFlower.
     s.specification_version = 3
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<httparty>, [">= 0.4.4"])
+      s.add_runtime_dependency(%q<httparty>, [">= 0.4.3"])
     else
-      s.add_dependency(%q<httparty>, [">= 0.4.4"])
+      s.add_dependency(%q<httparty>, [">= 0.4.3"])
     end
   else
-    s.add_dependency(%q<httparty>, [">= 0.4.4"])
+    s.add_dependency(%q<httparty>, [">= 0.4.3"])
   end
 end

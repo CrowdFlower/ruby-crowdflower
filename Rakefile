@@ -16,7 +16,7 @@ EOF
     gem.email = "brian@doloreslabs.com"
     gem.homepage = "http://github.com/dolores/ruby-crowdflower"
     gem.authors = ["Brian P O'Rourke", "Chris Van Pelt"]
-    gem.add_dependency 'httparty', '>= 0.4.4'
+    gem.add_dependency 'httparty', '>= 0.4.3'
   end
 
 rescue LoadError
