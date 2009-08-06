@@ -37,6 +37,12 @@ end
 
 task :default => :spec
 
+task :refresh_builder do
+  cp "pkg/ruby-crowdflower-#{File.read("VERSION").strip}.gem", "../builder/gems/cache/"
+  rm_rf "../builder/gems/gems/ruby-crowdflower-#{File.read("VERSION").strip}/"
+  `cd ../builder && bin/thor merb:gem:redeploy`
+end
+
 require 'rake/rdoctask'
 Rake::RDocTask.new do |rdoc|
   if File.exist?('VERSION.yml')
