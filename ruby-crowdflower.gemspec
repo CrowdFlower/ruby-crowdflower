@@ -26,6 +26,12 @@ yet ready for use with the current version of CrowdFlower.
      "Rakefile",
      "VERSION",
      "lib/ruby-crowdflower.rb",
+     "lib/ruby-crowdflower/base.rb",
+     "lib/ruby-crowdflower/job.rb",
+     "lib/ruby-crowdflower/judgment.rb",
+     "lib/ruby-crowdflower/order.rb",
+     "lib/ruby-crowdflower/patches/httparty.rb",
+     "lib/ruby-crowdflower/unit.rb",
      "ruby-crowdflower.gemspec",
      "spec/ruby-crowdflower_spec.rb",
      "spec/spec_helper.rb"
