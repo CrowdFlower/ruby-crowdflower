@@ -1,11 +1,12 @@
 module CrowdFlower
   class Order
     include Defaults
+    attr_reader :job
     
     def initialize(job)
       @job = job
-      Order.base_uri "https://api.crowdflower.com/v1/jobs/#{@job.job_id}/orders"
-      Order.default_params(CrowdFlower.conn.default_params)
+      Order.base_uri CrowdFlower.with_domain("/jobs/#{@job.id}/orders")
+      Order.default_params CrowdFlower.key
     end
     
     def debit(percentage = 100)

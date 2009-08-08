@@ -1,11 +1,12 @@
 module CrowdFlower
   class Unit
     include Defaults
+    attr_reader :job
     
     def initialize(job)
       @job = job
-      Unit.base_uri "https://api.crowdflower.com/v1/jobs/#{@job.job_id}/units"
-      Unit.default_params(CrowdFlower.conn.default_params)
+      Unit.base_uri CrowdFlower.with_domain("/jobs/#{@job.id}/units")
+      Unit.default_params CrowdFlower.key
     end
     
     def all(page = 1, limit = 1000)

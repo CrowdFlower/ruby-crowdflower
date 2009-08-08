@@ -37,7 +37,7 @@ end
 
 task :default => :spec
 
-task :refresh_builder do
+task :refresh_builder => [:build] do
   cp "pkg/ruby-crowdflower-#{File.read("VERSION").strip}.gem", "../builder/gems/cache/"
   rm_rf "../builder/gems/gems/ruby-crowdflower-#{File.read("VERSION").strip}/"
   `cd ../builder && bin/thor merb:gem:redeploy`
