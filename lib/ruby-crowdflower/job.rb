@@ -34,6 +34,10 @@ module CrowdFlower
       Job.upload(file, content_type, @id)
     end
     
+    def legend
+      Job.get("/#{@id}/legend")
+    end
+    
     def self.upload(file, content_type, job_id = nil)
       job_id = "/#{job_id}" unless job_id.nil?
       Job.post("#{job_id}/upload", 
