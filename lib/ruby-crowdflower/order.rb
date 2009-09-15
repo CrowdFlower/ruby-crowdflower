@@ -10,7 +10,7 @@ module CrowdFlower
     end
     
     def debit(percentage = 100, channels = ["amt"])
-      Order.post("", {:query => {:percentage => percentage, :channels => channels}})
+      Order.post("", {:body => {:percentage => percentage, :channels => channels}})
     end
   end
 end
