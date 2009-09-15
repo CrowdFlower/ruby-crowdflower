@@ -52,7 +52,7 @@ module CrowdFlower
       if res.code == 202
         puts "CSV Generating... Trying again in 10 seconds."
         Kernel.sleep 10
-        download_csv
+        download_csv(full, filename)
       else
         puts "CSV written to: #{File.expand_path(filename)}"
         File.open(filename, "w") {|f| f.puts res.body }

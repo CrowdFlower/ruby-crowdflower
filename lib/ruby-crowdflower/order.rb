@@ -9,8 +9,8 @@ module CrowdFlower
       Order.default_params CrowdFlower.key
     end
     
-    def debit(percentage = 100)
-      Order.post("", {:query => {:percentage => percentage}})
+    def debit(percentage = 100, channels = ["amt"])
+      Order.post("", {:query => {:percentage => percentage, :channels => channels}})
     end
   end
 end
