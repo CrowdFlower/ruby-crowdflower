@@ -2,8 +2,7 @@
 
 A toolkit for interacting with CrowdFlower via the REST API.
 
-This is alpha software in its most nascent stages, and is not 
-yet ready for use with the current version of CrowdFlower.
+This is alpha software. Have fun!
 
 == Note on Patches/Pull Requests
  

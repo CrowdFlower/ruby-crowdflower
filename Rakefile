@@ -9,8 +9,7 @@ begin
     gem.description = <<-EOF
 A toolkit for interacting with CrowdFlower via the REST API.
 
-This is alpha software in its most nascent stages, and is not 
-yet ready for use with the current version of CrowdFlower.
+This is alpha software. Have fun!
 
 EOF
     gem.email = "brian@doloreslabs.com"
@@ -57,4 +56,3 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
-
