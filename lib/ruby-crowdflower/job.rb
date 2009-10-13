@@ -5,14 +5,26 @@ module CrowdFlower
     
     def initialize(job_id)
       @id = job_id
-      Job.base_uri CrowdFlower.with_domain("/jobs")
-      Job.default_params CrowdFlower.key
+      Job.connect
+    end
+
+    def self.resource_uri
+      "/jobs"
     end
     
     def self.all
-      Job.get("/")
+      connect
+      get("/")
     end
     
+    def self.upload(file, content_type, job_id = nil)
+      connect
+      job_uri = job_id ? "/#{job_id}" : ""
+      post("#{job_uri}/upload", 
+        :body => File.read(file), 
+        :headers => custom_content_type(content_type))
+    end
+ 
     def get(id = nil)
       Job.get("/#{@id || id}")
     end
@@ -36,13 +48,6 @@ module CrowdFlower
     
     def legend
       Job.get("/#{@id}/legend")
-    end
-    
-    def self.upload(file, content_type, job_id = nil)
-      job_id = "/#{job_id}" unless job_id.nil?
-      Job.post("#{job_id}/upload", 
-        :body => File.read(file), 
-        :headers => custom_content_type(content_type))
     end
     
     def download_csv(full = true, filename = nil)
@@ -72,7 +77,6 @@ module CrowdFlower
     end
     
     private
-    
     def self.custom_content_type(content_type)
       #To preserve the accept header we are forced to merge the defaults back in...
       Job.default_options[:headers].merge({"content-type" => content_type})

@@ -7,6 +7,15 @@ module CrowdFlower
       base.send :include, HTTParty
       base.send :headers, "accept" => "application/json"
       base.send :format, :json
+      base.extend ClassMethods
+    end
+
+    module ClassMethods
+      def connect
+        raise "Please establish a connection using 'CrowdFlower.connect!'" unless CrowdFlower.key
+        self.base_uri CrowdFlower.domain + self.resource_uri
+        self.default_params :key => CrowdFlower.key
+      end
     end
   end
   
@@ -14,14 +23,12 @@ module CrowdFlower
     @@domain = development ? "http://api.localhost:4000/v1" : "https://api.crowdflower.com/v1"
     @@key = key
   end
-  
-  def self.with_domain(path)
-    raise "Please establish a connection using 'CrowdFlower.connect!'" unless @@domain
-    @@domain + path
-  end
-  
+
   def self.key
-    raise "Please establish a connection using 'CrowdFlower.connect!'" unless @@key
-    {:key => @@key}
+    @@key
+  end
+
+  def self.domain
+    @@domain
   end
 end
