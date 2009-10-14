@@ -8,3 +8,7 @@ require 'spec/autorun'
 Spec::Runner.configure do |config|
   
 end
+
+def connect
+  CrowdFlower.connect! "ABCDEF0123456789"
+end

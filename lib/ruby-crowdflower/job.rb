@@ -8,38 +8,70 @@ module CrowdFlower
       Job.connect
     end
 
+    def resource_uri
+      Job.resource_uri
+    end
+
     def self.resource_uri
       "/jobs"
     end
-    
+
     def self.all
       connect
-      get("/")
+      get(resource_uri)
     end
     
     def self.upload(file, content_type, job_id = nil)
       connect
       job_uri = job_id ? "/#{job_id}" : ""
-      post("#{job_uri}/upload", 
+      res = post("#{resource_uri}/#{job_uri}/upload", 
         :body => File.read(file), 
         :headers => custom_content_type(content_type))
+      if res["error"]
+        raise CrowdFlower::APIError.new(res["error"])
+      end
+      Job.new(res["id"])
+    end
+
+    # Creates a new empty Job in CrowdFlower.
+    def self.create
+      connect
+      res = post("#{resource_uri}/upload", :query => {:job => {:without_data => "true" } } )
+      if res["error"]
+        raise CrowdFlower::APIError.new(res["error"])
+      end
+      Job.new(res["id"])
     end
  
     def get(id = nil)
-      Job.get("/#{@id || id}")
+      Job.get("#{resource_uri}/#{@id || id}")
+    end
+
+    # Returns an accessor for all the Units associated with this job.
+    # This enables you to do things like:
+    #
+    # * job.units.all
+    # * job.units.get [id]
+    # * job.units.create [data]
+    def units
+      Unit.new(self)
     end
     
-    #Copies a job and optionally gold or all units.
-    #Parameters
+    # Copies a job and optionally gold or all units.
+    # Parameters
     #  opts: Hash
     #    gold: when set to true copies gold units
     #    all_units: when set to true copies all units
     def copy(opts = {})
-      Job.get("/#{@id}/copy", {:query => opts})
+      res = Job.get("#{resource_uri}/#{@id}/copy", {:query => opts})
+      if res["error"]
+        raise CrowdFlower::APIError.new(res["error"])
+      end
+      Job.new(res["id"])
     end
     
     def status
-      Job.get("/#{@id}/ping")
+      Job.get("#{resource_uri}/#{@id}/ping")
     end
     
     def upload(file, content_type)
@@ -47,12 +79,12 @@ module CrowdFlower
     end
     
     def legend
-      Job.get("/#{@id}/legend")
+      Job.get("#{resource_uri}/#{@id}/legend")
     end
     
     def download_csv(full = true, filename = nil)
       filename ||= "#{full ? "f" : "a"}#{@id}.csv"
-      res = Job.get("/#{@id}.csv", {:format => :csv, :query => {:full => full}})
+      res = Job.get("#{resource_uri}/#{@id}.csv", {:format => :csv, :query => {:full => full}})
       puts "Status... #{res.code.inspect}"
       if res.code == 202
         puts "CSV Generating... Trying again in 10 seconds."
@@ -65,17 +97,17 @@ module CrowdFlower
     end
     
     def pause
-      Job.get("/#{@id}/pause")
+      Job.get("#{resource_uri}/#{@id}/pause")
     end
     
     def resume
-      Job.get("/#{@id}/resume")
+      Job.get("#{resource_uri}/#{@id}/resume")
     end
     
     def cancel
-      Job.get("/#{@id}/cancel")
+      Job.get("#{resource_uri}/#{@id}/cancel")
     end
-    
+
     private
     def self.custom_content_type(content_type)
       #To preserve the accept header we are forced to merge the defaults back in...

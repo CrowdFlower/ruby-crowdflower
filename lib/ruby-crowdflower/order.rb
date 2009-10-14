@@ -5,12 +5,15 @@ module CrowdFlower
     
     def initialize(job)
       @job = job
-      Order.base_uri CrowdFlower.with_domain("/jobs/#{@job.id}/orders")
-      Order.default_params CrowdFlower.key
+      Order.connect
+    end
+
+    def resource_uri
+      "/jobs/#{@job.id}/orders"
     end
     
     def debit(percentage = 100, channels = ["amt"])
-      Order.post("", {:body => {:percentage => percentage, :channels => channels}})
+      Order.post(resource_uri, {:body => {:percentage => percentage, :channels => channels}})
     end
   end
 end

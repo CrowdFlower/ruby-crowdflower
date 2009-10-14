@@ -5,15 +5,14 @@
 
 Gem::Specification.new do |s|
   s.name = %q{ruby-crowdflower}
-  s.version = "0.1.0"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Brian P O'Rourke", "Chris Van Pelt"]
-  s.date = %q{2009-09-14}
+  s.date = %q{2009-10-13}
   s.description = %q{A toolkit for interacting with CrowdFlower via the REST API.
 
-This is alpha software in its most nascent stages, and is not 
-yet ready for use with the current version of CrowdFlower.
+This is alpha software. Have fun!
 
 }
   s.email = %q{brian@doloreslabs.com}
@@ -46,7 +45,8 @@ yet ready for use with the current version of CrowdFlower.
   s.summary = %q{a toolkit for the CrowdFlower API}
   s.test_files = [
     "spec/ruby-crowdflower_spec.rb",
-     "spec/spec_helper.rb"
+     "spec/spec_helper.rb",
+     "test/integration_tests.rb"
   ]
 
   if s.respond_to? :specification_version then
