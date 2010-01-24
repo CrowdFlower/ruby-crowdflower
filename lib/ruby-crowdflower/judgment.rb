@@ -5,13 +5,16 @@ module CrowdFlower
     
     def initialize(job)
       @job = job
-      Judgment.base_uri CrowdFlower.with_domain("/jobs/#{@job.id}/judgments")
-      Judgment.default_params CrowdFlower.key
+      Judgment.connect
+    end
+    
+    def resource_uri
+      "/jobs/#{@job.id}/judgments"
     end
     
     #Pull every judgment
-    def all(page = 1, limit = 1000)#full = true
-      Judgment.get("", {:query => {:limit => limit, :page => page}})
+    def all(page = 1, limit = 100, latest = true)#full = true
+      Judgment.get(resource_uri, {:query => {:limit => limit, :page => page, :latest => latest}})
     end
     
     def get(id)
