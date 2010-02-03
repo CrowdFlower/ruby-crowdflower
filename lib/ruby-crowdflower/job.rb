@@ -108,6 +108,13 @@ module CrowdFlower
       Job.get("#{resource_uri}/#{@id}/cancel")
     end
 
+    def update(data)
+      res = Job.put("#{resource_uri}/#{@id}.json", {:query => { :job => data }, :headers => { "Content-Length" => "0" } } )
+      if res["error"]
+        raise CrowdFlower::APIError.new(res["error"])
+      end
+    end
+
     private
     def self.custom_content_type(content_type)
       #To preserve the accept header we are forced to merge the defaults back in...
