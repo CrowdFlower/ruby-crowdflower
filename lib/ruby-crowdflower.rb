@@ -1,7 +1,5 @@
 require 'httparty'
-require 'ruby-crowdflower/patches/httparty'
-require 'ruby-crowdflower/base'
-require 'ruby-crowdflower/job'
-require 'ruby-crowdflower/unit'
-require 'ruby-crowdflower/judgment'
-require 'ruby-crowdflower/order'
+
+%w{base.rb job.rb unit.rb judgment.rb order.rb patches/httparty.rb}.each do |file|
+  require File.dirname(__FILE__) +"/ruby-crowdflower/" + file
+end
