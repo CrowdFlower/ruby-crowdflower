@@ -9,13 +9,14 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Brian P O'Rourke", "Chris Van Pelt"]
-  s.date = %q{2010-02-03}
+  s.date = %q{2010-02-22}
   s.description = %q{A toolkit for interacting with CrowdFlower via the REST API.
 
 This is alpha software. Have fun!
 
 }
   s.email = %q{brian@doloreslabs.com}
+  s.executables = ["cl_skel.rb", "crowdflower.rb"]
   s.extra_rdoc_files = [
     "LICENSE",
      "README.rdoc"
@@ -28,6 +29,7 @@ This is alpha software. Have fun!
      "README.rdoc",
      "Rakefile",
      "VERSION",
+     "bin/crowdflower.rb",
      "lib/ruby-crowdflower.rb",
      "lib/ruby-crowdflower/base.rb",
      "lib/ruby-crowdflower/job.rb",

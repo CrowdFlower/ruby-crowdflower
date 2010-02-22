@@ -88,7 +88,7 @@ assert job.status["tainted_judgments"] == 0
 say "Registering a webhook."
 job.update :webhook_uri => "http://localhost:8080/crowdflower"
 
-say "Testing webhook."
-job.test_webhook
+say "Webhook test needs to be written."
+#job.test_webhook
 
 say ">-< Tests complete. >-<"
