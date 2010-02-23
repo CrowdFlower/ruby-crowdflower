@@ -4,7 +4,7 @@ require 'rake'
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
-    gem.name = "ruby-crowdflower"
+    gem.name = "crowdflower"
     gem.summary = %Q{a toolkit for the CrowdFlower API}
     gem.description = <<-EOF
 A toolkit for interacting with CrowdFlower via the REST API.
@@ -25,8 +25,8 @@ end
 task :default => :build
 
 task :refresh_builder => [:build] do
-  cp "pkg/ruby-crowdflower-#{File.read("VERSION").strip}.gem", "../builder/gems/cache/"
-  rm_rf "../builder/gems/gems/ruby-crowdflower-#{File.read("VERSION").strip}/"
+  cp "pkg/crowdflower-#{File.read("VERSION").strip}.gem", "../builder/gems/cache/"
+  rm_rf "../builder/gems/gems/crowdflower-#{File.read("VERSION").strip}/"
   `cd ../builder && bin/thor merb:gem:redeploy`
 end
 
@@ -40,7 +40,7 @@ Rake::RDocTask.new do |rdoc|
   end
 
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "ruby-crowdflower #{version}"
+  rdoc.title = "crowdflower #{version}"
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
