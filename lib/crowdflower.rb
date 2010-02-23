@@ -1,0 +1,7 @@
+require 'httparty'
+require 'ruby-crowdflower/patches/httparty'
+require 'ruby-crowdflower/base'
+require 'ruby-crowdflower/job'
+require 'ruby-crowdflower/unit'
+require 'ruby-crowdflower/judgment'
+require 'ruby-crowdflower/order'
