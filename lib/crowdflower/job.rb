@@ -109,7 +109,7 @@ module CrowdFlower
     end
 
     def update(data)
-      res = Job.put("#{resource_uri}/#{@id}.json", {:query => { :job => data }, :headers => { "Content-Length" => "0" } } )
+      res = Job.put("#{resource_uri}/#{@id}.json", {:body => { :job => data }, :headers => { "Content-Length" => "0" } } )
       if res["error"]
         raise CrowdFlower::APIError.new(res["error"])
       end

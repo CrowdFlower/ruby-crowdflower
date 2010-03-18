@@ -33,7 +33,7 @@ module CrowdFlower
   end
   
   def self.connect!(key, development = false)
-    @@domain = development ? "http://api.tsujigiri.local:4000/v1" : "https://api.crowdflower.com/v1"
+    @@domain = development ? "http://api.localhost.com:4000/v1" : "https://api.crowdflower.com/v1"
     @@key = key
   end
 

@@ -1,7 +1,7 @@
 $: << File.dirname(__FILE__) + "/../lib"
 
 require 'rubygems'
-require 'ruby-crowdflower'
+require 'crowdflower'
 require 'json'
 
 API_KEY   = ENV["API_KEY"]
@@ -87,6 +87,22 @@ assert job.status["tainted_judgments"] == 0
 
 say "Registering a webhook."
 job.update :webhook_uri => "http://localhost:8080/crowdflower"
+
+say "Adding title, instructions, and problem to the job."
+job.update({:title => 'testtt', :instructions => 'testttt fdsf sfds fsdfs fesfsdf', :problem => '<cml:text label="Text" class="unmodified"/>' })
+
+say "Ordering the job."
+order = CrowdFlower::Order.new(job)
+unit_count = 8
+order.debit(8)
+wait_until { job.status["needed_judgments"] == 24}
+
+say "Canceling the unit."
+unit_id = job.units.all.to_a[0][0]
+unit = CrowdFlower::Unit.new(job)
+assert unit.get(unit_id)['state'] == 'judgable'
+puts unit.cancel(unit_id).inspect
+assert unit.get(unit_id)['state'] == 'new'
 
 say "Webhook test needs to be written."
 #job.test_webhook
