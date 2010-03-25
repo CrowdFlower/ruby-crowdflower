@@ -24,7 +24,7 @@ module CrowdFlower
       Unit.get("#{resource_uri}/#{id}/judgments")
     end
     
-    def create(data, gold = nil)
+    def create(data, gold = false)
       Unit.post(resource_uri, {:query => {:unit => {:data => data.to_json, :golden => gold}}})
     end
     
