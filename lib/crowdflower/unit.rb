@@ -35,5 +35,9 @@ module CrowdFlower
     def split(on, with = " ")
       Unit.get("#{resource_uri}/split", {:query => {:on => on, :with => with}})
     end
+    
+    def cancel(unit_id)
+      Unit.post("#{resource_uri}/#{unit_id}/cancel.json")
+    end
   end
 end

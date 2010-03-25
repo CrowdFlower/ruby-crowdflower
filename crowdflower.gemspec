@@ -4,12 +4,12 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{ruby-crowdflower}
-  s.version = "0.2.2"
+  s.name = %q{crowdflower}
+  s.version = "0.2.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Brian P O'Rourke", "Chris Van Pelt"]
-  s.date = %q{2010-02-22}
+  s.date = %q{2010-03-17}
   s.description = %q{A toolkit for interacting with CrowdFlower via the REST API.
 
 This is alpha software. Have fun!
@@ -29,6 +29,7 @@ This is alpha software. Have fun!
      "README.rdoc",
      "Rakefile",
      "VERSION",
+<<<<<<< HEAD:ruby-crowdflower.gemspec
      "bin/crowdflower.rb",
      "lib/ruby-crowdflower.rb",
      "lib/ruby-crowdflower/base.rb",
@@ -38,13 +39,24 @@ This is alpha software. Have fun!
      "lib/ruby-crowdflower/patches/httparty.rb",
      "lib/ruby-crowdflower/unit.rb",
      "ruby-crowdflower.gemspec",
+=======
+     "bindev/cl_skel.rb",
+     "bindev/crowdflower.rb",
+     "crowdflower.gemspec",
+     "lib/crowdflower.rb",
+     "lib/crowdflower/base.rb",
+     "lib/crowdflower/job.rb",
+     "lib/crowdflower/judgment.rb",
+     "lib/crowdflower/order.rb",
+     "lib/crowdflower/unit.rb",
+>>>>>>> gmark/master:crowdflower.gemspec
      "test/integration_tests.rb",
      "test/sample.csv"
   ]
   s.homepage = %q{http://github.com/dolores/ruby-crowdflower}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.5}
+  s.rubygems_version = %q{1.3.6}
   s.summary = %q{a toolkit for the CrowdFlower API}
   s.test_files = [
     "test/integration_tests.rb"

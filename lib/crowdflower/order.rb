@@ -9,11 +9,11 @@ module CrowdFlower
     end
 
     def resource_uri
-      "/jobs/#{@job.id}/orders"
+      "/jobs/#{@job.id}/orders.json"
     end
     
-    def debit(percentage = 100, channels = ["amt"])
-      Order.post(resource_uri, {:body => {:percentage => percentage, :channels => channels}})
+    def debit(units_count = 1, channels = ["amt"])
+      Order.post(resource_uri, {:query => {:debit => {:units_count => units_count}, :channels => channels}})
     end
   end
 end
