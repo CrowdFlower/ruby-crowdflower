@@ -5,41 +5,30 @@
 
 Gem::Specification.new do |s|
   s.name = %q{crowdflower}
-  s.version = "0.2.3"
+  s.version = "0.4.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Brian P O'Rourke", "Chris Van Pelt"]
-  s.date = %q{2010-03-17}
+  s.date = %q{2010-03-25}
   s.description = %q{A toolkit for interacting with CrowdFlower via the REST API.
 
 This is alpha software. Have fun!
 
 }
   s.email = %q{brian@doloreslabs.com}
-  s.executables = ["cl_skel.rb", "crowdflower.rb"]
   s.extra_rdoc_files = [
     "LICENSE",
-     "README.rdoc"
+     "README.md"
   ]
   s.files = [
     ".document",
      ".gitignore",
+     "CONTRIBUTORS",
      "HISTORY.md",
      "LICENSE",
-     "README.rdoc",
+     "README.md",
      "Rakefile",
      "VERSION",
-<<<<<<< HEAD:ruby-crowdflower.gemspec
-     "bin/crowdflower.rb",
-     "lib/ruby-crowdflower.rb",
-     "lib/ruby-crowdflower/base.rb",
-     "lib/ruby-crowdflower/job.rb",
-     "lib/ruby-crowdflower/judgment.rb",
-     "lib/ruby-crowdflower/order.rb",
-     "lib/ruby-crowdflower/patches/httparty.rb",
-     "lib/ruby-crowdflower/unit.rb",
-     "ruby-crowdflower.gemspec",
-=======
      "bindev/cl_skel.rb",
      "bindev/crowdflower.rb",
      "crowdflower.gemspec",
@@ -49,14 +38,13 @@ This is alpha software. Have fun!
      "lib/crowdflower/judgment.rb",
      "lib/crowdflower/order.rb",
      "lib/crowdflower/unit.rb",
->>>>>>> gmark/master:crowdflower.gemspec
      "test/integration_tests.rb",
      "test/sample.csv"
   ]
   s.homepage = %q{http://github.com/dolores/ruby-crowdflower}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.6}
+  s.rubygems_version = %q{1.3.5}
   s.summary = %q{a toolkit for the CrowdFlower API}
   s.test_files = [
     "test/integration_tests.rb"
