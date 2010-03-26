@@ -1,6 +1,5 @@
 require 'httparty'
-require 'crowdflower/base'
-require 'crowdflower/job'
-require 'crowdflower/unit'
-require 'crowdflower/judgment'
-require 'crowdflower/order'
+
+%w{base job unit judgment order}.each do |file|
+  require File.dirname(__FILE__) +"/crowdflower/" + file
+end
