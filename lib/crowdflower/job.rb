@@ -34,9 +34,9 @@ module CrowdFlower
     end
 
     # Creates a new empty Job in CrowdFlower.
-    def self.create
+    def self.create(title)
       connect
-      res = post("#{resource_uri}/upload", :query => {:job => {:without_data => "true" } } )
+      res = post("#{resource_uri}.json", :query => {:job => {:title => title } }, :headers => { "Content-Length" => "0" } )
       if res["error"]
         raise CrowdFlower::APIError.new(res["error"])
       end

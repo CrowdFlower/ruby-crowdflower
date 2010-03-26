@@ -1,3 +1,10 @@
+## 0.4.0 (2010-03-25)
+* Allow key configuration from YAML
+* ruby-crowdflower is now just 'crowdflower'
+* Unit#create now creates non-gold units by default
+* Cleaned and removed the httparty monkey patches
+* Job#create now creates an empty job with a title
+
 ## 0.2.2 (2010-02-03)
 * Simple Job#update addition
 
