@@ -114,6 +114,10 @@ module CrowdFlower
         raise CrowdFlower::APIError.new(res["error"])
       end
     end
+    
+    def delete
+      Job.delete("#{resource_uri}/#{@id}.json")
+    end
 
     private
     def self.custom_content_type(content_type)
