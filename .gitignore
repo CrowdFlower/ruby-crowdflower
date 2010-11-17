@@ -3,4 +3,6 @@
 coverage
 rdoc
 pkg
-tags
+tags/.loadpath
+/.project
+/.loadpath

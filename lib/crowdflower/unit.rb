@@ -20,6 +20,10 @@ module CrowdFlower
       Unit.get("#{resource_uri}/#{id}")
     end
     
+    def ping
+      Unit.get("#{resource_uri}/ping")
+    end
+    
     def judgments(id)
       Unit.get("#{resource_uri}/#{id}/judgments")
     end

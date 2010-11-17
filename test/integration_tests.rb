@@ -71,6 +71,10 @@ say "-- Waiting for CrowdFlower to process the data"
 # server.
 wait_until { job.get["units_count"] == 8 }
 
+say "Checking ping."
+assert job.units.ping['count'] == 8
+assert job.units.ping['done'] == true
+
 say "Getting the units for this job."
 assert job.units.all.size == 8
 
