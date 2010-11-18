@@ -93,20 +93,22 @@ say "Registering a webhook."
 job.update :webhook_uri => "http://localhost:8080/crowdflower"
 
 say "Adding title, instructions, and problem to the job."
-job.update({:title => 'testtt', :instructions => 'testttt fdsf sfds fsdfs fesfsdf', :problem => '<cml:text label="Text" class="unmodified"/>' })
+job.update({:title => 'testtt',
+            :instructions => 'testttt fdsf sfds fsdfs fesfsdf', 
+            :cml => '<cml:text label="Text" class="unmodified" validates="required"/>'})
 
 say "Ordering the job."
 order = CrowdFlower::Order.new(job)
 unit_count = 8
 order.debit(8)
-wait_until { job.status["needed_judgments"] == 24}
+wait_until { job.get["state"].casecmp('running') == 0}
 
 say "Canceling the unit."
 unit_id = job.units.all.to_a[0][0]
 unit = CrowdFlower::Unit.new(job)
-assert unit.get(unit_id)['state'] == 'judgable'
+wait_until { unit.get(unit_id)['state'] == 'judgable' }
 puts unit.cancel(unit_id).inspect
-assert unit.get(unit_id)['state'] == 'new'
+assert unit.get(unit_id)['state'] == 'canceled'
 
 say "Webhook test needs to be written."
 #job.test_webhook
