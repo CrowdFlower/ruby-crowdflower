@@ -118,6 +118,14 @@ module CrowdFlower
     def delete
       Job.delete("#{resource_uri}/#{@id}.json")
     end
+    
+    def channels
+      Job.get("#{resource_uri}/#{@id}/channels")
+    end
+    
+    def enable_channels(channels)
+      Job.post("#{resource_uri}/#{@id}/channels", {:body => { :channels => channels }, :headers => { "Content-Length" => "0" } } )
+    end
 
     private
     def self.custom_content_type(content_type)

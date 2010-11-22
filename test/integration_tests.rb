@@ -96,6 +96,17 @@ say "Adding title, instructions, and problem to the job."
 job.update({:title => 'testtt',
             :instructions => 'testttt fdsf sfds fsdfs fesfsdf', 
             :cml => '<cml:text label="Text" class="unmodified" validates="required"/>'})
+            
+say "Checking channels"
+assert !job.channels['available_channels'].empty?
+assert job.channels['enabled_channels'].empty?
+job.enable_channels ['amt']
+assert job.channels['enabled_channels'] == ['amt']
+job.enable_channels ['mob']
+assert job.channels['enabled_channels'].sort == ['amt', 'mob']
+job.enable_channels ['mob']
+assert job.channels['enabled_channels'].sort == ['amt', 'mob']
+
 
 say "Ordering the job."
 order = CrowdFlower::Order.new(job)
