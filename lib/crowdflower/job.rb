@@ -124,7 +124,7 @@ module CrowdFlower
     end
     
     def enable_channels(channels)
-      Job.post("#{resource_uri}/#{@id}/channels", {:body => { :channels => channels }, :headers => { "Content-Length" => "0" } } )
+      Job.post("#{resource_uri}/#{@id}/channels", {:body => { :channels => channels } } )
     end
 
     private
