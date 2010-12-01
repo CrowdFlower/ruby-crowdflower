@@ -82,14 +82,14 @@ module CrowdFlower
       Job.get("#{resource_uri}/#{@id}/legend")
     end
     
-    def download_csv(kind = :full, filename = nil)
-      filename ||= "#{kind.to_s[0].chr}#{@id}.csv"
-      res = Job.get("#{resource_uri}/#{@id}.csv", {:format => :csv, :query => {:kind => kind}})
+    def download_csv(type = :full, filename = nil)
+      filename ||= "#{type.to_s[0].chr}#{@id}.csv"
+      res = Job.get("#{resource_uri}/#{@id}.csv", {:format => :csv, :query => {:type => type}})
       puts "Status... #{res.code.inspect}"
       if res.code == 202
         puts "CSV Generating... Trying again in 10 seconds."
         Kernel.sleep 10
-        download_csv(kind, filename)
+        download_csv(type, filename)
       else
         puts "CSV written to: #{File.expand_path(filename)}"
         File.open(filename, "w") {|f| f.puts res.body }
