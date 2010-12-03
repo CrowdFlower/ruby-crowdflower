@@ -32,8 +32,8 @@ module CrowdFlower
     end
   end
   
-  def self.connect!(key, development = false)
-    @@domain = development ? "http://api.localhost.com:4000/v1" : "https://api.crowdflower.com/v1"
+  def self.connect!(key, development = false, version = 1)
+    @@domain = development ? "http://api.localhost.com:4000/v#{version}" : "https://api.crowdflower.com/v#{version}"
     @@key = key
     begin # pass yaml file
       key = YAML.load_file(key)
