@@ -1,11 +1,11 @@
 module CrowdFlower
-  class Judgment
-    include Defaults
+  class Judgment < Base
     attr_reader :job
     
     def initialize(job)
+      super job.connection
       @job = job
-      Judgment.connect
+      connect
     end
     
     def resource_uri
@@ -14,11 +14,11 @@ module CrowdFlower
     
     #Pull every judgment
     def all(page = 1, limit = 100, latest = true)#full = true
-      Judgment.get(resource_uri, {:query => {:limit => limit, :page => page, :latest => latest}})
+      connection.get(resource_uri, {:query => {:limit => limit, :page => page, :latest => latest}})
     end
     
     def get(id)
-      Judgment.get("/#{id}")
+      connection.get("/#{id}")
     end
   end
 end

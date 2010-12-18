@@ -1,11 +1,11 @@
 module CrowdFlower
-  class Unit
-    include Defaults
+  class Unit < Base
     attr_reader :job
     
     def initialize(job)
+      super job.connection
       @job = job
-      Unit.connect
+      connect
     end
 
     def resource_uri
@@ -13,35 +13,35 @@ module CrowdFlower
     end
     
     def all(page = 1, limit = 1000)
-      Unit.get(resource_uri, {:query => {:limit => limit, :page => page}})
+      connection.get(resource_uri, {:query => {:limit => limit, :page => page}})
     end
     
     def get(id)
-      Unit.get("#{resource_uri}/#{id}")
+      connection.get("#{resource_uri}/#{id}")
     end
     
     def ping
-      Unit.get("#{resource_uri}/ping")
+      connection.get("#{resource_uri}/ping")
     end
     
     def judgments(id)
-      Unit.get("#{resource_uri}/#{id}/judgments")
+      connection.get("#{resource_uri}/#{id}/judgments")
     end
     
     def create(data, gold = false)
-      Unit.post(resource_uri, {:query => {:unit => {:data => data.to_json, :golden => gold}}})
+      connection.post(resource_uri, {:query => {:unit => {:data => data.to_json, :golden => gold}}})
     end
     
     def copy(unit_id, job_id, data = {})
-      Unit.get("#{resource_uri}/#{unit_id}/copy", {:query => {:unit => {:job_id => job_id, :data => data}}})
+      connection.get("#{resource_uri}/#{unit_id}/copy", {:query => {:unit => {:job_id => job_id, :data => data}}})
     end
     
     def split(on, with = " ")
-      Unit.get("#{resource_uri}/split", {:query => {:on => on, :with => with}})
+      connection.get("#{resource_uri}/split", {:query => {:on => on, :with => with}})
     end
     
     def cancel(unit_id)
-      Unit.post("#{resource_uri}/#{unit_id}/cancel.json")
+      connection.post("#{resource_uri}/#{unit_id}/cancel.json")
     end
   end
 end

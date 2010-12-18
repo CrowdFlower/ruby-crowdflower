@@ -1,3 +1,6 @@
+## 0.4.6 (2010-12-17)
+* Multiple API keys can be used simultaneously
+
 ## 0.4.0 (2010-03-25)
 * Allow key configuration from YAML
 * ruby-crowdflower is now just 'crowdflower'
