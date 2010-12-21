@@ -31,13 +31,13 @@ module CrowdFlower
         :headers => {"content-type" => content_type})
 
       verify_response res
-      self.new(res["id"])
+      job.kind_of?(Job) ? job : self.new(res["id"], conn)
     end
 
     # Creates a new empty Job in CrowdFlower.
     def self.create(title)
       connect
-      res = post("#{resource_uri}.json", :query => {:job => {:title => title } }, :headers => { "Content-Length" => "0" } )
+      res = self.post("#{resource_uri}.json", :query => {:job => {:title => title } }, :headers => { "Content-Length" => "0" } )
       verify_response res
       self.new(res["id"])
     end
@@ -82,7 +82,7 @@ module CrowdFlower
     def download_csv(type = :full, filename = nil)
       filename ||= "#{type.to_s[0].chr}#{@id}.csv"
       res = connection.get("#{resource_uri}/#{@id}.csv", {:format => :csv, :query => {:type => type}})
-      verify_response res
+      self.class.verify_response res
       puts "Status... #{res.code.inspect}"
       if res.code == 202
         puts "CSV Generating... Trying again in 10 seconds."

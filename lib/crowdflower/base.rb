@@ -24,10 +24,11 @@ module CrowdFlower
     headers "accept" => "application/json"
     format :json
     
-    attr_reader :key, :domain, :version
+    attr_reader :key, :domain, :version, :development
     
     def initialize(key, development, version)
       @version = version
+      @development = development
       @domain = development ? "http://api.localhost.com:4000/v#{version}" : "https://api.crowdflower.com/v#{version}"
       @key = key
       begin # pass yaml file
@@ -99,13 +100,10 @@ module CrowdFlower
       self.default_connection = Connection.new(key, development, version)
     end
     
-    def self.method_missing(method_id, *args)
-      if [:get, :post, :put, :delete].include?(method_id)
-        connection.send(method_id, *args)
-      else
-        super
-      end
-    end
+    def self.get(*args); connection.get(*args); end
+    def self.post(*args); connection.post(*args); end
+    def self.put(*args); connection.put(*args); end
+    def self.delete(*args); connection.delete(*args); end
     
     def connect
       unless connection
