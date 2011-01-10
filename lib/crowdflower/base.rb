@@ -17,6 +17,10 @@ module CrowdFlower
   def self.connect!(key, development = false, version = 1)
     Base.connect!(key, development, version)
   end
+
+  def self.connect_domain!(key, domain_base, version = 1)
+    Base.connect_domain!(key, domain_base, version)
+  end
   
   # an object that stores connection details; does actual http talking
   class Connection
@@ -24,12 +28,11 @@ module CrowdFlower
     headers "accept" => "application/json"
     format :json
     
-    attr_reader :key, :domain, :version, :development
+    attr_reader :key, :domain, :version
     
-    def initialize(key, development, version)
+    def initialize(key, domain_base, version)
       @version = version
-      @development = development
-      @domain = development ? "http://api.localhost.com:4000/v#{version}" : "https://api.crowdflower.com/v#{version}"
+      @domain = "#{domain_base}/v#{version}"
       @key = key
       begin # pass yaml file
         key = YAML.load_file(key)
@@ -95,9 +98,14 @@ module CrowdFlower
     class << self
       attr_accessor :default_connection
     end
-    
+
     def self.connect!(key, development = false, version = 1)
-      self.default_connection = Connection.new(key, development, version)
+      domain_base = development ? "https://api.localdev.crowdflower.com:8443" : "https://api.crowdflower.com"
+      connect_domain!(key, domain_base, version)
+    end
+    
+    def self.connect_domain!(key, domain_base, version = 1)
+      self.default_connection = Connection.new(key, domain_base, version)
     end
     
     def self.get(*args); connection.get(*args); end

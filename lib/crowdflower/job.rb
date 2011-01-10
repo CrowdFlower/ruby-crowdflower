@@ -26,7 +26,8 @@ module CrowdFlower
       
       job_uri = job ? "/#{job.kind_of?(Job) ? job.id : job}" : ""
       conn = job.kind_of?(Job) ? job.connection : self.connection
-      res = conn.post("#{resource_uri}/#{job_uri}/upload", 
+      upload_uri = "#{resource_uri}/#{job_uri}/upload".squeeze("/")
+      res = conn.post(upload_uri, 
         :body => File.read(file), 
         :headers => {"content-type" => content_type})
 

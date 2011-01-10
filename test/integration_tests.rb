@@ -36,7 +36,7 @@ def wait_until
     if yield
       return
     end
-    sleep 1
+    sleep 5 
   end
   raise "Condition not met in a reasonable time period"
 end
