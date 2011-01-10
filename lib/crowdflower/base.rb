@@ -28,11 +28,12 @@ module CrowdFlower
     headers "accept" => "application/json"
     format :json
     
-    attr_reader :key, :domain, :version
+    attr_reader :key, :domain, :version, :domain_base
     
     def initialize(key, domain_base, version)
+      @domain_base = domain_base
       @version = version
-      @domain = "#{domain_base}/v#{version}"
+      @domain = "#{@domain_base}/v#{version}"
       @key = key
       begin # pass yaml file
         key = YAML.load_file(key)
