@@ -87,8 +87,7 @@ assert CrowdFlower::Job.create("should be ok").units.ping['count']
 assert job_subclass_with_no_custom_key.create("should be ok").units.ping['count']
 assert job_subclass_with_valid_custom_key.create("should be ok").units.ping['count']
 assert_exception_raised(CrowdFlower::APIError) {job_subclass_with_invalid_custom_key.create("job creation should fail")}
-
-
+assert CrowdFlower::Base.connection.public_url == "localdev.crowdflower.com:80"
 
 say "Uploading a test CSV"
 job = CrowdFlower::Job.upload(File.dirname(__FILE__) + "/sample.csv", "text/csv")

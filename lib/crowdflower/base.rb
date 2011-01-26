@@ -21,6 +21,10 @@ module CrowdFlower
   def self.connect_domain!(key, domain_base, version = 1)
     Base.connect_domain!(key, domain_base, version)
   end
+
+  def self.connect_config!(opts)
+    Base.connect_config!(opts)
+  end
   
   # an object that stores connection details; does actual http talking
   class Connection
@@ -28,13 +32,15 @@ module CrowdFlower
     headers "accept" => "application/json"
     format :json
     
-    attr_reader :key, :domain, :version, :domain_base
+    attr_reader :key, :domain, :version, :domain_base, :ssl_port, :public_port
     
-    def initialize(key, domain_base, version)
+    def initialize(key, domain_base, version, ssl_port = 443, public_port = 80)
       @domain_base = domain_base
       @version = version
       @domain = "#{@domain_base}/v#{version}"
       @key = key
+      @ssl_port = ssl_port
+      @public_port = public_port
       begin # pass yaml file
         key = YAML.load_file(key)
         @key = key[:key] || key["key"]
@@ -42,7 +48,7 @@ module CrowdFlower
         @key = key
       end
     end
-    
+
     # get, post, put and delete methods
     def method_missing(method_id, *args)
       if [:get, :post, :put, :delete].include?(method_id)
@@ -56,7 +62,28 @@ module CrowdFlower
         super
       end
     end
-    
+
+    # Returns the base crowdflower domain from the api url's domain.
+    #
+    # @api public
+    # @return [String] the base crowdflower domain
+    # @example
+    #   CrowdFlower::Connection.new("asdf", "https://api.crowdflower.com").crowdflower_base #=> "crowdflower.com"
+    def crowdflower_base
+      uri = URI.parse(domain_base)
+      "#{uri.host.gsub("api.", "")}"
+    end
+
+    # Returns the url to reach crowdflower regularly through a browser
+    #
+    # @api public
+    # @return [String] the url to reach crowdflower in a browser
+    # @example
+    #   CrowdFlower::Connection.new("asdf", "https://api.crowdflower.com").public_url #=> "crowdflower.com:80"
+    def public_url
+      "#{crowdflower_base}:#{public_port}"
+    end
+
     private
     def url(path)
       "#{@domain}/#{path}"
@@ -108,7 +135,19 @@ module CrowdFlower
     def self.connect_domain!(key, domain_base, version = 1)
       self.default_connection = Connection.new(key, domain_base, version)
     end
-    
+
+    def self.connect_config!(opts)
+      extract_option = lambda do |arr|
+        arr.map { |k| opts[k] || opts[k.to_s] }.compact.first
+      end
+      key         = extract_option.call([:key, :api_key])
+      domain_base = extract_option.call([:domain_base, :domain])
+      version     = extract_option.call([:version])     || 1
+      ssl_port    = extract_option.call([:ssl_port])    || 443
+      public_port = extract_option.call([:public_port]) || 80
+      self.default_connection = Connection.new(key, domain_base, version, ssl_port, public_port)
+    end
+
     def self.get(*args); connection.get(*args); end
     def self.post(*args); connection.post(*args); end
     def self.put(*args); connection.put(*args); end
