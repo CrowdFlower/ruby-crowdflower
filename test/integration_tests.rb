@@ -36,7 +36,7 @@ def wait_until
     if yield
       return
     end
-    sleep 1
+    sleep 5 
   end
   raise "Condition not met in a reasonable time period"
 end
@@ -47,12 +47,47 @@ def assert(truth)
   end
 end
 
+def assert_exception_raised expected_exception_class
+  begin
+    yield
+  rescue expected_exception_class
+    return
+  end
+  raise "exception #{expected_ex} has not been raised"
+end
+
+
 def say(msg)
   $stdout.puts msg
 end
 
+
+say "defining multiple api keys"
+(job_subclass_with_valid_custom_key = Class.new(CrowdFlower::Job)).connect! API_KEY, true
+(job_subclass_with_invalid_custom_key = Class.new(CrowdFlower::Job)).connect! 'invalid api key', true
+job_subclass_with_no_custom_key = Class.new(CrowdFlower::Job)
+
+say "no default api key"
+assert_exception_raised(CrowdFlower::UsageError) {CrowdFlower::Job.create("job creation should fail")}
+assert_exception_raised(CrowdFlower::UsageError) {job_subclass_with_no_custom_key.create("job creation should fail")}
+assert_exception_raised(CrowdFlower::APIError) {job_subclass_with_invalid_custom_key.create("job creation should fail")}
+assert job_subclass_with_valid_custom_key.create("should be ok").units.ping['count']
+
+say "invalid default api key"
+CrowdFlower.connect! "invalid default api key", true
+assert_exception_raised(CrowdFlower::APIError) {CrowdFlower::Job.create("job creation should fail")}
+assert_exception_raised(CrowdFlower::APIError) {job_subclass_with_no_custom_key.create("job creation should fail")}
+assert_exception_raised(CrowdFlower::APIError) {job_subclass_with_invalid_custom_key.create("job creation should fail")}
+assert job_subclass_with_valid_custom_key.create("should be ok").units.ping['count']
+
 say "Connecting to the API"
 CrowdFlower.connect! API_KEY, true
+
+assert CrowdFlower::Job.create("should be ok").units.ping['count']
+assert job_subclass_with_no_custom_key.create("should be ok").units.ping['count']
+assert job_subclass_with_valid_custom_key.create("should be ok").units.ping['count']
+assert_exception_raised(CrowdFlower::APIError) {job_subclass_with_invalid_custom_key.create("job creation should fail")}
+assert CrowdFlower::Base.connection.public_url == "localdev.crowdflower.com:80"
 
 say "Uploading a test CSV"
 job = CrowdFlower::Job.upload(File.dirname(__FILE__) + "/sample.csv", "text/csv")

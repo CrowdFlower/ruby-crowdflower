@@ -1,11 +1,11 @@
 module CrowdFlower
-  class Job
-    include Defaults
+  class Job < Base
     attr_reader :id
     
-    def initialize(job_id)
+    def initialize(job_id, connection = nil)
+      super connection
       @id = job_id
-      Job.connect
+      connect
     end
 
     def resource_uri
@@ -21,30 +21,30 @@ module CrowdFlower
       get(resource_uri)
     end
     
-    def self.upload(file, content_type, job_id = nil)
+    def self.upload(file, content_type, job = nil)
       connect
-      job_uri = job_id ? "/#{job_id}" : ""
-      res = post("#{resource_uri}/#{job_uri}/upload", 
+      
+      job_uri = job ? "/#{job.kind_of?(Job) ? job.id : job}" : ""
+      conn = job.kind_of?(Job) ? job.connection : self.connection
+      upload_uri = "#{resource_uri}/#{job_uri}/upload".squeeze("/")
+      res = conn.post(upload_uri, 
         :body => File.read(file), 
-        :headers => custom_content_type(content_type))
-      if res["error"]
-        raise CrowdFlower::APIError.new(res["error"])
-      end
-      Job.new(res["id"])
+        :headers => {"content-type" => content_type})
+
+      verify_response res
+      job.kind_of?(Job) ? job : self.new(res["id"], conn)
     end
 
     # Creates a new empty Job in CrowdFlower.
     def self.create(title)
       connect
-      res = post("#{resource_uri}.json", :query => {:job => {:title => title } }, :headers => { "Content-Length" => "0" } )
-      if res["error"]
-        raise CrowdFlower::APIError.new(res["error"])
-      end
-      Job.new(res["id"])
+      res = self.post("#{resource_uri}.json", :query => {:job => {:title => title } }, :headers => { "Content-Length" => "0" } )
+      verify_response res
+      self.new(res["id"])
     end
  
     def get(id = nil)
-      Job.get("#{resource_uri}/#{@id || id}")
+      connection.get("#{resource_uri}/#{@id || id}")
     end
 
     # Returns an accessor for all the Units associated with this job.
@@ -63,28 +63,27 @@ module CrowdFlower
     #    gold: when set to true copies gold units
     #    all_units: when set to true copies all units
     def copy(opts = {})
-      res = Job.get("#{resource_uri}/#{@id}/copy", {:query => opts})
-      if res["error"]
-        raise CrowdFlower::APIError.new(res["error"])
-      end
-      Job.new(res["id"])
+      res = connection.get("#{resource_uri}/#{@id}/copy", {:query => opts})
+      self.class.verify_response res
+      self.class.new(res["id"])
     end
     
     def status
-      Job.get("#{resource_uri}/#{@id}/ping")
+      connection.get("#{resource_uri}/#{@id}/ping")
     end
     
     def upload(file, content_type)
-      Job.upload(file, content_type, @id)
+      self.class.upload(file, content_type, self)
     end
     
     def legend
-      Job.get("#{resource_uri}/#{@id}/legend")
+      connection.get("#{resource_uri}/#{@id}/legend")
     end
     
     def download_csv(type = :full, filename = nil)
       filename ||= "#{type.to_s[0].chr}#{@id}.csv"
-      res = Job.get("#{resource_uri}/#{@id}.csv", {:format => :csv, :query => {:type => type}})
+      res = connection.get("#{resource_uri}/#{@id}.csv", {:format => :csv, :query => {:type => type}})
+      self.class.verify_response res
       puts "Status... #{res.code.inspect}"
       if res.code == 202
         puts "CSV Generating... Trying again in 10 seconds."
@@ -97,40 +96,44 @@ module CrowdFlower
     end
     
     def pause
-      Job.get("#{resource_uri}/#{@id}/pause")
+      connection.get("#{resource_uri}/#{@id}/pause")
     end
     
     def resume
-      Job.get("#{resource_uri}/#{@id}/resume")
+      connection.get("#{resource_uri}/#{@id}/resume")
     end
     
     def cancel
-      Job.get("#{resource_uri}/#{@id}/cancel")
+      connection.get("#{resource_uri}/#{@id}/cancel")
     end
 
     def update(data)
-      res = Job.put("#{resource_uri}/#{@id}.json", {:body => { :job => data }, :headers => { "Content-Length" => "0" } } )
+      res = connection.put("#{resource_uri}/#{@id}.json", {:body => { :job => data }, :headers => { "Content-Length" => "0" } } )
       if res["error"]
         raise CrowdFlower::APIError.new(res["error"])
       end
     end
     
     def delete
-      Job.delete("#{resource_uri}/#{@id}.json")
+      connection.delete("#{resource_uri}/#{@id}.json")
     end
     
     def channels
-      Job.get("#{resource_uri}/#{@id}/channels")
+      connection.get("#{resource_uri}/#{@id}/channels")
     end
     
     def enable_channels(channels)
-      Job.post("#{resource_uri}/#{@id}/channels", {:body => { :channels => channels } } )
+      connection.post("#{resource_uri}/#{@id}/channels", {:body => { :channels => channels } } )
     end
 
     private
-    def self.custom_content_type(content_type)
-      #To preserve the accept header we are forced to merge the defaults back in...
-      Job.default_options[:headers].merge({"content-type" => content_type})
+    
+    def self.verify_response(response)
+      if response["error"]
+        raise CrowdFlower::APIError.new(response["error"])
+      elsif response.response.kind_of? Net::HTTPUnauthorized
+        raise CrowdFlower::APIError.new('message' => response.to_s)
+      end
     end
   end
 end

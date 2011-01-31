@@ -1,11 +1,11 @@
 module CrowdFlower
-  class Order
-    include Defaults
+  class Order < Base
     attr_reader :job
     
     def initialize(job)
+      super job.connection
       @job = job
-      Order.connect
+      connect
     end
 
     def resource_uri
@@ -13,7 +13,7 @@ module CrowdFlower
     end
     
     def debit(units_count = 1, channels = ["amt"])
-      Order.post(resource_uri, {:query => {:debit => {:units_count => units_count}, :channels => channels}})
+      connection.post(resource_uri, {:query => {:debit => {:units_count => units_count}, :channels => channels}})
     end
   end
 end
