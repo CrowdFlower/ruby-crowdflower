@@ -14,7 +14,8 @@ module CrowdFlower
     
     #Pull every judgment
     def all(page = 1, limit = 100, latest = true)#full = true
-      Judgment.get(resource_uri, {:query => {:limit => limit, :page => page, :latest => latest}})
+      opts = CrowdFlower.version == 2 ? {:unseen => latest} : {:latest => latest}
+      Judgment.get(resource_uri, {:query => {:limit => limit, :page => page}.merge(opts)})
     end
     
     def get(id)

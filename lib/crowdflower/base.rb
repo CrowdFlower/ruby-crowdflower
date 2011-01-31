@@ -33,6 +33,7 @@ module CrowdFlower
   end
   
   def self.connect!(key, development = false, version = 1)
+    @@version = version
     @@domain = development ? "http://api.localhost.com:4000/v#{version}" : "https://api.crowdflower.com/v#{version}"
     @@key = key
     begin # pass yaml file
@@ -41,6 +42,10 @@ module CrowdFlower
     rescue # pass key
       @@key = key
     end
+  end
+  
+  def self.version
+    @@version
   end
 
   def self.key
