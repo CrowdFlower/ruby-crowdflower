@@ -1,3 +1,6 @@
+## 0.5.0 (2011-02-01)
+* Worker API added for managing workers (flagging, approving, etc.)
+
 ## 0.4.6 (2010-12-17)
 * Multiple API keys can be used simultaneously
 
