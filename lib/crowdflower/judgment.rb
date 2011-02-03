@@ -19,7 +19,7 @@ module CrowdFlower
     end
     
     def get(id)
-      connection.get("/#{id}")
+      connection.get("#{resource_uri}/#{id}")
     end
   end
 end
