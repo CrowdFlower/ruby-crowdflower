@@ -1,3 +1,6 @@
+## 0.5.1 (2011-02-03)
+* Added individual judgment rejection to API.
+
 ## 0.5.0 (2011-02-01)
 * Worker API added for managing workers (flagging, approving, etc.)
 
