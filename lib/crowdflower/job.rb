@@ -108,10 +108,9 @@ module CrowdFlower
     end
 
     def update(data)
-      res = connection.put("#{resource_uri}/#{@id}.json", {:body => { :job => data }, :headers => { "Content-Length" => "0" } } )
-      if res["error"]
-        raise CrowdFlower::APIError.new(res["error"])
-      end
+      response = connection.put("#{resource_uri}/#{@id}.json", {:body => { :job => data }, :headers => { "Content-Length" => "0" } } )
+      self.class.verify_response(response)
+      response
     end
     
     def delete
@@ -126,14 +125,5 @@ module CrowdFlower
       connection.post("#{resource_uri}/#{@id}/channels", {:body => { :channels => channels } } )
     end
 
-    private
-    
-    def self.verify_response(response)
-      if response["error"]
-        raise CrowdFlower::APIError.new(response["error"])
-      elsif response.response.kind_of? Net::HTTPUnauthorized
-        raise CrowdFlower::APIError.new('message' => response.to_s)
-      end
-    end
   end
 end

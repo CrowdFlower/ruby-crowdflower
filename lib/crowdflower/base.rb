@@ -164,6 +164,14 @@ module CrowdFlower
         raise UsageError, "Please establish a connection using 'CrowdFlower.connect!'"
       end
     end
+
+   def self.verify_response(response)
+      if response["errors"]
+        raise CrowdFlower::APIError.new(response["errors"])
+      elsif response.response.kind_of? Net::HTTPUnauthorized
+        raise CrowdFlower::APIError.new('message' => response.to_s)
+      end
+    end
     
   end
   
