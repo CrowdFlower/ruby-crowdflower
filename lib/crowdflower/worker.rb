@@ -15,7 +15,7 @@ module CrowdFlower
     def bonus( worker_id, amount, reason=nil )
       params = { :amount => amount }
       params.merge!( :reason => reason ) if reason
-      connection.put( "#{resource_uri}/#{worker_id}/bonus", params )
+      connection.put( "#{resource_uri}/#{worker_id}/bonus", :body => params )
     end
     
     def approve( worker_id )
@@ -39,12 +39,12 @@ module CrowdFlower
         :subject => subject,
         :message => message
       }
-      connection.put( "#{resource_uri}/#{worker_id}/notify", params )
+      connection.put( "#{resource_uri}/#{worker_id}/notify", :body => params )
     end
     
     def flag( worker_id, reason )
       params = reason ? { :reason => reason } : nil
-      connection.put( "#{resource_uri}/#{worker_id}/flag", params )
+      connection.put( "#{resource_uri}/#{worker_id}/flag", :body => params )
     end
     
     def deflag( worker_id )
