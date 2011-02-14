@@ -54,10 +54,8 @@ module CrowdFlower
       if [:get, :post, :put, :delete].include?(method_id)
         path, options = *args
         options ||= {}
-        options[:body] = default_params.merge(options[:body] || {})
         options[:query] = (default_params.merge(options[:query] || {}))
         options[:headers] = (self.class.default_options[:headers].merge(options[:headers] || {}))
-        
         self.class.send(method_id, url(path), options)
       else
         super
