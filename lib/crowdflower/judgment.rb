@@ -28,7 +28,7 @@ module CrowdFlower
     # 
     # @param [String,Integer] id The CrowdFlower id for the judgment to reject.
     def reject( id )
-      put( "#{resource_uri}/#{id}/reject", :headers => { "Content-Length" => 0 } )
+      put( "#{resource_uri}/#{id}/reject", :headers => { "Content-Length" => "0" } )
     end
     
     protected
