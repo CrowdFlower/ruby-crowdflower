@@ -14,12 +14,12 @@ module CrowdFlower
     
     #Pull every judgment
     def all(page = 1, limit = 100, latest = true)
-      opts = CrowdFlower.version == 2 ? {:unseen => latest} : {:latest => latest}
-      get(resource_uri, {:query => {:limit => limit, :page => page}.merge(opts)})
+      opts = connection.version == 2 ? {:unseen => latest} : {:latest => latest}
+      connection.get(resource_uri, {:query => {:limit => limit, :page => page}.merge(opts)})
     end
     
     def get(id)
-      get("#{resource_uri}/#{id}")
+      connection.get("#{resource_uri}/#{id}")
     end
     
     # Reject an individual Judgment.
@@ -28,17 +28,7 @@ module CrowdFlower
     # 
     # @param [String,Integer] id The CrowdFlower id for the judgment to reject.
     def reject( id )
-      put( "#{resource_uri}/#{id}/reject", :headers => { "Content-Length" => "0" } )
-    end
-    
-    protected
-    
-    def put( *args )
-      connection.put *args
-    end
-    
-    def get( *args )
-      connection.get *args
+      connection.put( "#{resource_uri}/#{id}/reject", :headers => { "Content-Length" => "0" } )
     end
   end
 end
