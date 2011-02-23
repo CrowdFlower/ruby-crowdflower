@@ -9,7 +9,7 @@ module CrowdFlower
 
     def initialize(hash)
       @details = hash
-      super @details["message"]
+      super @details.inspect
     end
   end
   
