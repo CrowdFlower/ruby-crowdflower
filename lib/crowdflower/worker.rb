@@ -13,25 +13,27 @@ module CrowdFlower
     end
     
     def bonus( worker_id, amount, reason=nil )
-      params = { :amount => amount }
-      params.merge!( :reason => reason ) if reason
-      connection.put( "#{resource_uri}/#{worker_id}/bonus", params )
+      params = {
+        :amount => amount,
+        :reason => reason
+      }
+      connection.post( "#{resource_uri}/#{worker_id}/bonus", :query => params )
     end
     
     def approve( worker_id )
-      connection.put( "#{resource_uri}/#{worker_id}/approve" )
+      connection.put( "#{resource_uri}/#{worker_id}/approve", :headers => { "Content-Length" => "0" } )
     end
     
     def reject( worker_id )
-      connection.put( "#{resource_uri}/#{worker_id}/reject" )
+      connection.put( "#{resource_uri}/#{worker_id}/reject", :headers => { "Content-Length" => "0" } )
     end
     
     def ban( worker_id )
-      connection.put( "#{resource_uri}/#{worker_id}/ban" )
+      connection.put( "#{resource_uri}/#{worker_id}/ban", :headers => { "Content-Length" => "0" } )
     end
     
     def deban( worker_id )
-      connection.put( "#{resource_uri}/#{worker_id}/deban" )
+      connection.put( "#{resource_uri}/#{worker_id}/deban", :headers => { "Content-Length" => "0" } )
     end
     
     def notify( worker_id, subject, message )
@@ -39,16 +41,15 @@ module CrowdFlower
         :subject => subject,
         :message => message
       }
-      connection.put( "#{resource_uri}/#{worker_id}/notify", params )
+      connection.post( "#{resource_uri}/#{worker_id}/notify", :query => params )
     end
     
-    def flag( worker_id, reason )
-      params = reason ? { :reason => reason } : nil
-      connection.put( "#{resource_uri}/#{worker_id}/flag", params )
+    def flag( worker_id, reason = nil )
+      connection.put( "#{resource_uri}/#{worker_id}/flag", :body => { :reason => reason }, :headers => { "Content-Length" => "0" } )
     end
     
     def deflag( worker_id )
-      connection.put( "#{resource_uri}/#{worker_id}/deflag" )
+      connection.put( "#{resource_uri}/#{worker_id}/deflag",  :headers => { "Content-Length" => "0" } )
     end
   end
 end

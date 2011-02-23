@@ -56,7 +56,6 @@ module CrowdFlower
         options ||= {}
         options[:query] = (default_params.merge(options[:query] || {}))
         options[:headers] = (self.class.default_options[:headers].merge(options[:headers] || {}))
-        
         self.class.send(method_id, url(path), options)
       else
         super
