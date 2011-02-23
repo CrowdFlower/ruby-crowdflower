@@ -5,8 +5,9 @@ require 'crowdflower'
 require 'json'
 
 API_KEY   = ENV["API_KEY"]
+DOMAIN_BASE = ENV["DOMAIN_BASE"] || "https://api.localdev.crowdflower.com:8443"
 
-unless API_KEY && API_KEY.size > 5
+unless API_KEY && API_KEY.size > 3
   puts <<EOF
 
   These integration tests interact with api.crowdflower.com.
@@ -53,7 +54,7 @@ def assert_exception_raised expected_exception_class
   rescue expected_exception_class
     return
   end
-  raise "exception #{expected_ex} has not been raised"
+  raise "exception #{expected_exception_class} has not been raised"
 end
 
 
@@ -63,8 +64,8 @@ end
 
 
 say "defining multiple api keys"
-(job_subclass_with_valid_custom_key = Class.new(CrowdFlower::Job)).connect! API_KEY, true
-(job_subclass_with_invalid_custom_key = Class.new(CrowdFlower::Job)).connect! 'invalid api key', true
+(job_subclass_with_valid_custom_key = Class.new(CrowdFlower::Job)).connect! API_KEY, DOMAIN_BASE
+(job_subclass_with_invalid_custom_key = Class.new(CrowdFlower::Job)).connect! 'invalid api key', DOMAIN_BASE
 job_subclass_with_no_custom_key = Class.new(CrowdFlower::Job)
 
 say "no default api key"
@@ -74,14 +75,14 @@ assert_exception_raised(CrowdFlower::APIError) {job_subclass_with_invalid_custom
 assert job_subclass_with_valid_custom_key.create("should be ok").units.ping['count']
 
 say "invalid default api key"
-CrowdFlower.connect! "invalid default api key", true
+CrowdFlower.connect! "invalid default api key", DOMAIN_BASE
 assert_exception_raised(CrowdFlower::APIError) {CrowdFlower::Job.create("job creation should fail")}
 assert_exception_raised(CrowdFlower::APIError) {job_subclass_with_no_custom_key.create("job creation should fail")}
 assert_exception_raised(CrowdFlower::APIError) {job_subclass_with_invalid_custom_key.create("job creation should fail")}
 assert job_subclass_with_valid_custom_key.create("should be ok").units.ping['count']
 
 say "Connecting to the API"
-CrowdFlower.connect! API_KEY, true
+CrowdFlower.connect! API_KEY, DOMAIN_BASE
 
 assert CrowdFlower::Job.create("should be ok").units.ping['count']
 assert job_subclass_with_no_custom_key.create("should be ok").units.ping['count']

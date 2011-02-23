@@ -14,8 +14,8 @@ module CrowdFlower
   end
   
   # a convenience method for backward compatibility
-  def self.connect!(key, development = false, version = 1)
-    Base.connect!(key, development, version)
+  def self.connect!(key, domain_base = "https://api.crowdflower.com", version = 1)
+    Base.connect!(key, domain_base, version)
   end
 
   def self.connect_domain!(key, domain_base, version = 1)
@@ -127,8 +127,7 @@ module CrowdFlower
       attr_accessor :default_connection
     end
 
-    def self.connect!(key, development = false, version = 1)
-      domain_base = development ? "https://api.localdev.crowdflower.com:8443" : "https://api.crowdflower.com"
+    def self.connect!(key, domain_base = "https://api.crowdflower.com", version = 1)
       connect_domain!(key, domain_base, version)
     end
     
