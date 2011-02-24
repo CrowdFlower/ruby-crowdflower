@@ -125,13 +125,13 @@ wait_until { job2.get["units_count"] == 8 }
 say "Checking the status of the job."
 assert job.status["tainted_judgments"] == 0
 
-say "Registering a webhook."
-job.update :webhook_uri => "http://localhost:8080/crowdflower"
-
 say "Adding title, instructions, and problem to the job."
 job.update({:title => 'testtt',
             :instructions => 'testttt fdsf sfds fsdfs fesfsdf', 
             :cml => '<cml:text label="Text" class="unmodified" validates="required"/>'})
+
+say "Registering a webhook."
+job.update :webhook_uri => "http://localhost:8080/crowdflower"
             
 say "Checking channels"
 assert !job.channels['available_channels'].empty?
