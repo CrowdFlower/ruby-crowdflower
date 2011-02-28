@@ -37,10 +37,11 @@ module CrowdFlower
     def initialize(key, domain_base, version, ssl_port = 443, public_port = 80)
       @domain_base = domain_base
       @version = version
-      @domain = "#{@domain_base}/v#{version}"
       @key = key
       @ssl_port = ssl_port
       @public_port = public_port
+      port = @domain_base =~ /^https/ ? @ssl_port : @public_port
+      @domain = "#{@domain_base}:#{port}/v#{version}"
       begin # pass yaml file
         key = YAML.load_file(key)
         @key = key[:key] || key["key"]
