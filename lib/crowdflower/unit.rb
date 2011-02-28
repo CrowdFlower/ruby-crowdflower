@@ -29,7 +29,7 @@ module CrowdFlower
     end
     
     def create(data, gold = false)
-      connection.post(resource_uri, {:query => {:unit => {:data => data.to_json, :golden => gold}}})
+      connection.post(resource_uri, {:body => {:unit => {:data => data.to_json, :golden => gold}}})
     end
     
     def copy(unit_id, job_id, data = {})
