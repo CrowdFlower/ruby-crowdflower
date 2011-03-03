@@ -27,8 +27,8 @@ module CrowdFlower
     # *Admin-only && MTurk-only*
     # 
     # @param [String,Integer] id The CrowdFlower id for the judgment to reject.
-    def reject( id )
-      connection.put( "#{resource_uri}/#{id}/reject", :headers => { "Content-Length" => "0" } )
+    def reject( id, reedo = false )
+      connection.put( "#{resource_uri}/#{id}/reject", :headers => { "Content-Length" => "0" }, :body => { :redo => reedo ? "true" : "false" } )
     end
   end
 end
