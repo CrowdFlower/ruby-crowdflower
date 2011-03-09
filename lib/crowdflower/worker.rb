@@ -17,7 +17,7 @@ module CrowdFlower
         :amount => amount,
         :reason => reason
       }
-      connection.post( "#{resource_uri}/#{worker_id}/bonus", :query => params )
+      connection.post( "#{resource_uri}/#{worker_id}/bonus", :body => params )
     end
     
     def approve( worker_id )

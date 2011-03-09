@@ -43,5 +43,9 @@ module CrowdFlower
     def cancel(unit_id)
       connection.post("#{resource_uri}/#{unit_id}/cancel.json")
     end
+
+    def request_more_judgments(unit_id, nb_judgments = 1)
+      connection.post("#{resource_uri}/#{unit_id}/request_more_judgments.json", :body => {:nb_judgments => nb_judgments})
+    end
   end
 end
