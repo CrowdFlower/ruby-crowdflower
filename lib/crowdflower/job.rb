@@ -1,5 +1,6 @@
 module CrowdFlower
   class Job < Base
+    attr_accessor :res
     attr_reader :id
     
     def initialize(job_id, connection = nil)
@@ -64,7 +65,7 @@ module CrowdFlower
     #    gold: when set to true copies gold units
     #    all_units: when set to true copies all units
     def copy(opts = {})
-      res = connection.get("#{resource_uri}/#{@id}/copy", {:query => opts})
+      res = connection.get("#{resource_uri}/#{@id}/copy", {:params => opts})
       self.class.verify_response res
       self.class.new(res["id"])
     end
