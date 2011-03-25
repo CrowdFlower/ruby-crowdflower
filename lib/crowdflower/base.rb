@@ -163,10 +163,12 @@ module CrowdFlower
       end
     end
 
-   def self.verify_response(response)
+    def self.verify_response(response)
       if response.respond_to?(:[]) && (response["errors"] || response["error"])
         raise CrowdFlower::APIError.new(response["errors"] || response["error"])
       elsif response.response.kind_of? Net::HTTPUnauthorized
+        raise CrowdFlower::APIError.new('message' => response.to_s)
+      elsif (500...600).include?(response.code)
         raise CrowdFlower::APIError.new('message' => response.to_s)
       end
     end
