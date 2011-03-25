@@ -9,7 +9,7 @@ module CrowdFlower
 
     def initialize(hash)
       @details = hash
-      super @details.inspect
+      super hash["message"] || hash.inspect
     end
   end
   
@@ -164,8 +164,8 @@ module CrowdFlower
     end
 
    def self.verify_response(response)
-      if response["errors"]
-        raise CrowdFlower::APIError.new(response["errors"])
+      if response.respond_to?(:[]) && (response["errors"] || response["error"])
+        raise CrowdFlower::APIError.new(response["errors"] || response["error"])
       elsif response.response.kind_of? Net::HTTPUnauthorized
         raise CrowdFlower::APIError.new('message' => response.to_s)
       end
