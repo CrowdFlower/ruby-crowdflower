@@ -10,7 +10,7 @@ module CrowdFlower
     def initialize(hash)
       @details = hash
       
-      super((hash.respond_to?(:[]) && hash["message"]) || hash.inspect)
+      super(hash.inspect)
     end
   end
   
