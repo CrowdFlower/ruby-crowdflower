@@ -4,6 +4,8 @@ module CrowdFlower
 
   class UsageError < StandardError ; end
 
+  class APIWarning < StandardError ; end
+
   class APIError < StandardError
     attr_reader :details
 
@@ -165,8 +167,12 @@ module CrowdFlower
     end
 
     def self.verify_response(response)
-      if response.respond_to?(:[]) && (response["errors"] || response["error"])
-        raise CrowdFlower::APIError.new(response["errors"] || response["error"])
+      if response.respond_to?(:[])
+        if error = (response["errors"] || response["error"])
+          raise CrowdFlower::APIError.new(error)
+        elsif warning = response["warning"]
+          raise CrowdFlower::APIWarning.new(warning)
+        end
       elsif response.response.kind_of? Net::HTTPUnauthorized
         raise CrowdFlower::APIError.new('message' => response.to_s)
       elsif (500...600).include?(response.code)
