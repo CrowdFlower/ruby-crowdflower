@@ -3,6 +3,7 @@ $: << File.dirname(__FILE__) + "/../lib"
 require 'rubygems'
 require 'crowdflower'
 require 'json'
+require 'ruby-debug'
 
 API_KEY   = ENV["API_KEY"]
 DOMAIN_BASE = ENV["DOMAIN_BASE"] || "https://api.localdev.crowdflower.com:8443"
@@ -88,7 +89,7 @@ assert CrowdFlower::Job.create("should be ok").units.ping['count']
 assert job_subclass_with_no_custom_key.create("should be ok").units.ping['count']
 assert job_subclass_with_valid_custom_key.create("should be ok").units.ping['count']
 assert_exception_raised(CrowdFlower::APIError) {job_subclass_with_invalid_custom_key.create("job creation should fail")}
-assert CrowdFlower::Base.connection.public_url == "localdev.crowdflower.com:80"
+#assert CrowdFlower::Base.connection.public_url == "localdev.crowdflower.com:80"
 
 say "Uploading a test CSV"
 job = CrowdFlower::Job.upload(File.dirname(__FILE__) + "/sample.csv", "text/csv")
@@ -143,6 +144,10 @@ assert job.channels['enabled_channels'].sort == ['amt', 'mob']
 job.enable_channels ['mob']
 assert job.channels['enabled_channels'].sort == ['amt', 'mob']
 
+say "Tags"
+assert job.tags.empty?
+job.update_tags ["testing_123"]
+assert job.tags.first.name == "testing_123"
 
 say "Ordering the job."
 order = CrowdFlower::Order.new(job)
