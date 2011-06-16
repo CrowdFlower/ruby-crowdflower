@@ -2,9 +2,9 @@ module CrowdFlower
   class Job < Base
     attr_accessor :res
     attr_reader :id
-    
-    def initialize(job_id, connection = nil)
-      super connection
+
+    def initialize(job_id, connection = nil, last_response = nil)
+      super connection, last_response
       @id = job_id
       connect
     end
@@ -34,7 +34,7 @@ module CrowdFlower
         :query => opts)
 
       verify_response res
-      job.kind_of?(Job) ? job : self.new(res["id"], conn)
+      job.kind_of?(Job) ? job : self.new(res["id"], conn, res)
     end
 
     # Creates a new empty Job in CrowdFlower.
@@ -42,7 +42,7 @@ module CrowdFlower
       connect
       res = self.post("#{resource_uri}.json", :query => {:job => {:title => title } }, :headers => { "Content-Length" => "0" } )
       verify_response res
-      self.new(res["id"])
+      self.new(res["id"], nil, res)
     end
  
     def get(id = nil)
@@ -67,7 +67,7 @@ module CrowdFlower
     def copy(opts = {})
       res = connection.get("#{resource_uri}/#{@id}/copy", {:query => opts})
       self.class.verify_response res
-      self.class.new(res["id"])
+      self.class.new(res["id"], nil, res)
     end
     
     def status

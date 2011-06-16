@@ -112,9 +112,11 @@ module CrowdFlower
   #     job1 = Job.create('created with default api key')      
   #     job2 = JobSubclass.create('created with custom api key')
   class Base
+    attr_accessor :last_response
 
-    def initialize(new_connection = nil)
+    def initialize(new_connection = nil, last_res = nil)
       @connection = new_connection
+      @last_response = last_res
     end
     
     def connection
