@@ -127,5 +127,13 @@ module CrowdFlower
       connection.post("#{resource_uri}/#{@id}/channels", {:body => { :channels => channels } } )
     end
 
+    def tags
+      connection.get("#{resource_uri}/#{@id}/tags") 
+    end
+
+    def update_tags(tags)
+      connection.put("#{resource_uri}/#{@id}/tags", {:body => { :tags => tags } } ) 
+    end
+
   end
 end
