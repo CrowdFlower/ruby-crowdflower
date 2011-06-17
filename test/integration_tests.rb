@@ -147,7 +147,7 @@ assert job.channels['enabled_channels'].sort == ['amt', 'mob']
 say "Tags"
 assert job.tags.empty?
 job.update_tags ["testing_123"]
-assert job.tags.first.name == "testing_123"
+assert job.tags.first["name"] == "testing_123"
 
 say "Ordering the job."
 order = CrowdFlower::Order.new(job)
