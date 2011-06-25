@@ -135,5 +135,12 @@ module CrowdFlower
       connection.put("#{resource_uri}/#{@id}/tags", {:body => { :tags => tags } } ) 
     end
 
+    def add_tags(tags)
+      connection.post("#{resource_uri}/#{@id}/tags", {:body => { :tags => tags } } ) 
+    end
+
+    def remove_tags(tags)
+      connection.delete("#{resource_uri}/#{@id}/tags", {:body => { :tags => tags } } ) 
+    end
   end
 end
