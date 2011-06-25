@@ -146,8 +146,12 @@ assert job.channels['enabled_channels'].sort == ['amt', 'mob']
 
 say "Tags"
 assert job.tags.empty?
-job.update_tags ["testing_123"]
-assert job.tags.first["name"] == "testing_123"
+job.update_tags ["testing_123", "testing_456"]
+assert job.tags.map{|t| t["name"]}.sort == ["testing_123", "testing_456"]
+job.remove_tags ["testing_123"]
+assert job.tags.map{|t| t["name"]} == ["testing_456"]
+job.add_tags ["testing_789"]
+assert job.tags.map{|t| t["name"]} == ["testing_456", "testing_789"]
 
 say "Ordering the job."
 order = CrowdFlower::Order.new(job)
