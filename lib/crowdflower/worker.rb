@@ -23,7 +23,7 @@ module CrowdFlower
     def approve( worker_id )
       connection.put( "#{resource_uri}/#{worker_id}/approve", :headers => { "Content-Length" => "0" } )
     end
-    
+
     def reject( worker_id )
       connection.put( "#{resource_uri}/#{worker_id}/reject", :headers => { "Content-Length" => "0" } )
     end
@@ -36,14 +36,18 @@ module CrowdFlower
       connection.put( "#{resource_uri}/#{worker_id}/deban", :headers => { "Content-Length" => "0" } )
     end
     
-    def notify( worker_id, subject, message )
+    def amt_notify( worker_id, subject, message )
       params = {
         :subject => subject,
         :message => message
       }
       connection.post( "#{resource_uri}/#{worker_id}/notify", :query => params )
     end
-    
+
+    def notify(worker_id, message)
+      connection.post("#{resource_uri}/#{worker_id}/notifications", :body => { :message => message }, :headers => { "Content-Length" => "0" })
+    end
+
     def flag( worker_id, reason = nil )
       connection.put( "#{resource_uri}/#{worker_id}/flag", :body => { :reason => reason }, :headers => { "Content-Length" => "0" } )
     end
