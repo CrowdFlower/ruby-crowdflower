@@ -45,7 +45,7 @@ module CrowdFlower
     end
 
     def notify(worker_id, message)
-      connection.post("#{resource_uri}/#{worker_id}/notifications", :body => { :notification => {:message => message }})
+      connection.post("/workers/#{worker_id}/notifications", :body => { :notification => {:message => message }})
     end
 
     def flag( worker_id, reason = nil )
