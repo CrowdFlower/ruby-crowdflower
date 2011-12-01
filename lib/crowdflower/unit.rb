@@ -40,6 +40,14 @@ module CrowdFlower
       connection.get("#{resource_uri}/split", {:query => {:on => on, :with => with}})
     end
     
+    def update(unit_id, params)
+      connection.put("#{resource_uri}/#{unit_id}", {:body => {:unit => params}})
+    end
+    
+    def make_gold(unit_id)
+      update(unit_id, :golden => "true")
+    end
+    
     def cancel(unit_id)
       connection.post("#{resource_uri}/#{unit_id}/cancel.json")
     end
