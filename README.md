@@ -38,4 +38,4 @@ Contributing
 Copyright
 ---------
 
-Copyright &copy; 2010 [Dolores Labs](http://www.doloreslabs.com/). See LICENSE for details.
+Copyright &copy; 2014 [CrowdFlower](http://www.crowdflower.com/). See LICENSE for details.

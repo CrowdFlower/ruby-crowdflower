@@ -12,7 +12,7 @@ A toolkit for interacting with CrowdFlower via the REST API.
 This is alpha software. Have fun!
 
 EOF
-    gem.email = "brian@doloreslabs.com"
+    gem.email = "brian@crowdflower.com"
     gem.homepage = "http://github.com/dolores/ruby-crowdflower"
     gem.authors = ["Brian P O'Rourke", "Chris Van Pelt"]
     gem.add_dependency 'httparty', '>= 0.7.4'
