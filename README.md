@@ -4,57 +4,54 @@ Currently this is a toolkit for interacting with the CrowdFlower REST API. It ma
 
 ## Table of Contents
 
-1. [Intstall](#Install)
-2. [Usage](#usage)
-3. [Breakdown](#breakdown)
-4. [Contribute](#contribute)
-5. [Team](#team)
-6. [License](#license)
+1. [Getting Started](#getting-started)
+2. [Usage and Examples](#usage-and-examples)
+3. [Contribute](#contribute)
+4. [Team](#team)
+5. [License](#license)
 
-## Install
-Require it in your ruby file:
+## Getting Started
+
+#####Require this gem in your ruby file:
     
     require 'crowdflower'
 
-Or add this line to your application's Gemfile:
+#####Or add this line to your application's Gemfile:
 
     $ gem 'crowdflower'
 
-And then execute:
+#####Then execute:
 
     $ bundle install
 
-Or install it yourself as:
+#####Or install it yourself as:
 
     $ gem install crowdflower
 
-## Usage
+This gem makes use of [CrowdFlower's API](http://success.crowdflower.com/customer/portal/articles/1288323-api-documentation). To find your API key, click on your name in the upper right hand corner and select "Account" from the drop down. To create an account click [here](https://id.crowdflower.com/registrations/new?redirect_url=https%3A%2F%2Fcrowdflower.com%2Fjobs&app=make&__hssc=14529640.6.1397164984954&__hstc=14529640.8f31cd290788fdc43f4da6707700cde6.1396463439689.1397160539873.1397164984954.16&hsCtaTracking=c85b8d58-818e-4f19-a27e-83e8f55da890%7C583ca9bc-a025-43b9-806a-b329df96a8c6).
 
-This gem makes use of [CrowdFlower's Human API](http://success.crowdflower.com/customer/portal/articles/1288323-api-documentation). Please check out our [Terms and Conditions](http://www.crowdflower.com/legal) page for detailed usage and licensing information.
-
-#####Specifiy either your api key or a yaml file containing the key:
+#####Specifiy your api key directly in your code or store it in a yaml file:
 
 ```ruby
+API_KEY = "YOUR_API_KEY"
+
 CrowdFlower.connect!( 'CrowdFlower.yaml' )
 ```
 
-## Classes Breakdown
+## Usage and Examples 
 
-* [Base](#base)
-* [Job](#job)
-* [Judgment](#judgment)
-* [Order](#order)
-* [Unit](#unit)
-* [Worker](#worker)
+* [Jobs](#job)
+* [Judgments](#judgment)
+* [Units](#unit)
+* [Workers](#worker)
 
-###Base Class
+###Jobs
 
-###Job Class
-  * Create
+#####Create
   ```ruby
   require 'crowdflower'
 
-  API_KEY = "UGTKhMZMLi_ZdsqoFJ3V"
+  API_KEY = "YOUR_API_KEY"
   DOMAIN_BASE = "https://api.crowdflower.com"
 
   CrowdFlower::Job.connect! API_KEY, DOMAIN_BASE
@@ -62,44 +59,52 @@ CrowdFlower.connect!( 'CrowdFlower.yaml' )
   title = "Crowdshop for Shoes!"
   new_job = CrowdFlower::Job.create(title)
   ```
-  * Get
+
+#####Get Information on Any Job
+The get command allows you to access any job's parsed JSON data. To access a job's JSON from your browser, go to api.crowdflower.com/v1/jobs/{your_job_id}.json. Here's an example: http://api.crowdflower.com/v1/jobs/418404.json. 
+
+When you use the get method you can receive all of the JSON for a given job or you can access attributes by using the key name in the get call: 
+
   ```ruby
   # GET JOB ID
   p "NEW JOB ID: #{new_job.get["id"]}"
   ```
+  
+    $ "NEW JOB ID: 418404"
+  
 
-  * Units: Had some issues calling units on job
+#####Units: Had some issues calling units on job
 
-  * Copy
+#####Copy
 
-  * Status
+#####Status
   ```ruby
   new_job.status 
   # or specify hash key
   new_job.status["all_units"]
   ```
 
-  * Upload: Two methods, need to explore more
+#####Upload: Two methods, need to explore more
 
-  * Legend: Not sure what this is used for
+#####Legend: Not sure what this is used for
 
-  * Download CSV: Still not sure why some are .csv and some are zip files
+#####Download CSV: Still not sure why some are .csv and some are zip files
 
-  * Pause
+#####Pause
 
-  * Resume
+#####Resume
 
-  * Cancel 
+#####Cancel 
 
-  * Update
+#####Update
 
-  * Delete
+#####Delete
 
-  * Channels
+#####Channels
 
-  * Enable Channels
+#####Enable Channels
 
-  * Tags
+#####Tags
   ```ruby
 
   # Add Tags
@@ -115,39 +120,45 @@ CrowdFlower.connect!( 'CrowdFlower.yaml' )
   new_job.remove_tags(tags)
   ```
 
-###Judgment Class
-  * All
-  * Get
-  * Reject
+========
 
-###Order Class
-  * Debit
+###Judgments
 
-###Unit Class
-  * All
-  * Get
-  * Ping
-  * Judgments
-  * Create
-  * Copy
-  * Split
-  * Update
-  * Make Gold
-  * Cancel
-  * Delete
-  * Request More Judgments
+#####All
+#####Get
+#####Reject
 
-###Worker Class
+========
 
-####Methods, Examples and Bugs
-  * Bonus
-  * Approve
-  * Reject
-  * Ban
-  * Deban
-  * Notifty
-  * Flag
-  * Deflag
+###Units
+
+#####All
+#####Get
+#####Ping
+#####Judgments
+#####Create
+#####Copy
+#####Split
+#####Update
+#####Make Gold
+#####Cancel
+#####Delete
+#####Request More Judgments
+
+========
+
+###Workers
+
+#####Bonus
+#####Approve
+#####Reject
+#####Ban
+#####Deban
+#####Notifty
+#####Flag
+#####Deflag
+
+========
 
 ## Contribute
 
@@ -184,3 +195,5 @@ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
 LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Please review our [Terms and Conditions](http://www.crowdflower.com/legal) page for detailed api usage and licensing information.
