@@ -28,6 +28,7 @@ Currently this is a toolkit for interacting with the CrowdFlower REST API. It ma
 
     $ gem install crowdflower
 
+
 This gem makes use of [CrowdFlower's API](http://success.crowdflower.com/customer/portal/articles/1288323-api-documentation). To find your API key, click on your name in the upper right hand corner and select "Account" from the drop down. To create an account click [here](https://id.crowdflower.com/registrations/new?redirect_url=https%3A%2F%2Fcrowdflower.com%2Fjobs&app=make&__hssc=14529640.6.1397164984954&__hstc=14529640.8f31cd290788fdc43f4da6707700cde6.1396463439689.1397160539873.1397164984954.16&hsCtaTracking=c85b8d58-818e-4f19-a27e-83e8f55da890%7C583ca9bc-a025-43b9-806a-b329df96a8c6).
 
 #####Specifiy your api key directly in your code or store it in a yaml file:
@@ -40,14 +41,20 @@ CrowdFlower.connect!( 'CrowdFlower.yaml' )
 
 ## Usage and Examples 
 
-* [Jobs](#job)
-* [Judgments](#judgment)
-* [Units](#unit)
-* [Workers](#worker)
+###GET: Get Back Parsed JSON for Any Job
+The get command allows you to access any job's parsed JSON data. To access a job's JSON from your browser, go to api.crowdflower.com/v1/jobs/{your_job_id}.json. Here's an example: http://api.crowdflower.com/v1/jobs/418404.json. 
 
-###Jobs
+When you use the get method you can receive all of the JSON for a given job or you can access attributes by using the key name in the get call: 
 
-#####Create
+  ```ruby
+  # GET JOB ID
+  p "NEW JOB ID: #{new_job.get["id"]}"
+  ```
+  
+    $ "NEW JOB ID: 418404"
+  
+###CREATE: Create a Blank Job
+
   ```ruby
   require 'crowdflower'
 
@@ -60,51 +67,33 @@ CrowdFlower.connect!( 'CrowdFlower.yaml' )
   new_job = CrowdFlower::Job.create(title)
   ```
 
-#####Get Information on Any Job
-The get command allows you to access any job's parsed JSON data. To access a job's JSON from your browser, go to api.crowdflower.com/v1/jobs/{your_job_id}.json. Here's an example: http://api.crowdflower.com/v1/jobs/418404.json. 
+###COPY: Copy an Existing Job
 
-When you use the get method you can receive all of the JSON for a given job or you can access attributes by using the key name in the get call: 
+```ruby
+  require 'crowdflower'
 
-  ```ruby
-  # GET JOB ID
-  p "NEW JOB ID: #{new_job.get["id"]}"
-  ```
-  
-    $ "NEW JOB ID: 418404"
-  
+  API_KEY = "YOUR_API_KEY"
+  DOMAIN_BASE = "https://api.crowdflower.com"
 
-#####Units: Had some issues calling units on job
+  CrowdFlower::Job.connect! API_KEY, DOMAIN_BASE
 
-#####Copy
-
-#####Status
-  ```ruby
-  new_job.status 
-  # or specify hash key
-  new_job.status["all_units"]
+  placeholder
   ```
 
-#####Upload: Two methods, need to explore more
+###UPLOAD: Upload a CSV to Create and Update Units 
 
-#####Legend: Not sure what this is used for
+  ```ruby
+  new_job.upload("crowdshopping.csv", "text/csv") 
+  ```
 
-#####Download CSV: Still not sure why some are .csv and some are zip files
+###CHANNELS: Choose Your Contributors
+  ```ruby
 
-#####Pause
+  # Enable Channels
+  code placeholder
+  ```
 
-#####Resume
-
-#####Cancel 
-
-#####Update
-
-#####Delete
-
-#####Channels
-
-#####Enable Channels
-
-#####Tags
+###TAGS: Add, Update and Remove Tags to Your Job
   ```ruby
 
   # Add Tags
@@ -120,30 +109,63 @@ When you use the get method you can receive all of the JSON for a given job or y
   new_job.remove_tags(tags)
   ```
 
-========
+###LAUNCH & RUN: Job Commands
 
-###Judgments
+####Pause
+  ```ruby
+  code placeholder
+  ```
 
-#####All
-#####Get
-#####Reject
+####Resume
+  ```ruby
+  code placeholder
+  ```
+
+####Cancel 
+  ```ruby
+  code placeholder
+  ```
+
+####Update
+  ```ruby
+  code placeholder
+  ```
+
+####Delete
+  ```ruby
+  code placeholder
+  ```
+
+###STATUS: Ping the Status of a Job
+This can also be viewed at api.crowdflower.com/v1/jobs/{your_job_id}/ping, like this one: 
+
+  ```ruby
+  # view status of all units and judgements:
+  new_job.status 
+
+  # or veiw specific value with hash key:
+  new_job.status["all_units"]
+  ```
+
+###DOWNLOAD RESULTS: CSV Download Details
+
 
 ========
 
 ###Units
 
-#####All
-#####Get
-#####Ping
-#####Judgments
-#####Create
-#####Copy
-#####Split
-#####Update
-#####Make Gold
-#####Cancel
-#####Delete
-#####Request More Judgments
+####All
+####Get
+####Ping
+####Judgments
+####Create
+####Copy
+####Split
+####Update
+####Make Gold
+####Cancel
+####Delete
+####Request More Judgments
 
 ========
 
