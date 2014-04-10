@@ -12,8 +12,11 @@ Currently this is a toolkit for interacting with the CrowdFlower REST API. It ma
 6. [License](#license)
 
 ## Install
+Require it in your ruby file:
+    
+    require 'crowdflower'
 
-Add this line to your application's Gemfile:
+Or add this line to your application's Gemfile:
 
     $ gem 'crowdflower'
 
@@ -32,10 +35,10 @@ This gem makes use of [CrowdFlower's Human API](http://success.crowdflower.com/c
 #####Specifiy either your api key or a yaml file containing the key:
 
 ```ruby
-CrowdFlower.connect!( 'CrowdFlower.yml' )
+CrowdFlower.connect!( 'CrowdFlower.yaml' )
 ```
 
-## Breakdown
+## Classes Breakdown
 
 * [Base](#base)
 * [Job](#job)
@@ -43,43 +46,84 @@ CrowdFlower.connect!( 'CrowdFlower.yml' )
 * [Order](#order)
 * [Unit](#unit)
 * [Worker](#worker)
-* [Crowdflower](#crowdflower)
 
-###Base
+###Base Class
 
-####Placeholder
-
-###Job
+###Job Class
   * Create
-  * Get
-  * Units
-  * Copy
-  * Deban
-  * Status
-  * Upload
-  * Legend
-  * Download CSV --> Note to self: test csv vs zip
-  * Pause
-  * Resume
-  * Cancel 
-  * Update
-  * Delete
-  * Channels
-  * Enable Channels
-  * Tags
-  * Update Tags
-  * Add Tags
-  * Remove Tags
+  ```ruby
+  require 'crowdflower'
 
-###Judgment
+  API_KEY = "UGTKhMZMLi_ZdsqoFJ3V"
+  DOMAIN_BASE = "https://api.crowdflower.com"
+
+  CrowdFlower::Job.connect! API_KEY, DOMAIN_BASE
+
+  title = "Crowdshop for Shoes!"
+  new_job = CrowdFlower::Job.create(title)
+  ```
+  * Get
+  ```ruby
+  # GET JOB ID
+  p "NEW JOB ID: #{new_job.get["id"]}"
+  ```
+
+  * Units: Had some issues calling units on job
+
+  * Copy
+
+  * Status
+  ```ruby
+  new_job.status 
+  # or specify hash key
+  new_job.status["all_units"]
+  ```
+
+  * Upload: Two methods, need to explore more
+
+  * Legend: Not sure what this is used for
+
+  * Download CSV: Still not sure why some are .csv and some are zip files
+
+  * Pause
+
+  * Resume
+
+  * Cancel 
+
+  * Update
+
+  * Delete
+
+  * Channels
+
+  * Enable Channels
+
+  * Tags
+  ```ruby
+
+  # Add Tags
+  tags = "shoes", "shopping", "fashion"
+  new_job.add_tags(tags)
+
+  # Update Tags - replaces exisiting tags
+  tags = "fun", "glitter"
+  new_job.update_tags(tags)
+
+  # Remove Tags
+  tags = "fun"
+  new_job.remove_tags(tags)
+  ```
+
+###Judgment Class
   * All
   * Get
   * Reject
 
-###Order
+###Order Class
   * Debit
 
-###Unit
+###Unit Class
   * All
   * Get
   * Ping
@@ -93,7 +137,7 @@ CrowdFlower.connect!( 'CrowdFlower.yml' )
   * Delete
   * Request More Judgments
 
-###Worker
+###Worker Class
 
 ####Methods, Examples and Bugs
   * Bonus
@@ -104,10 +148,6 @@ CrowdFlower.connect!( 'CrowdFlower.yml' )
   * Notifty
   * Flag
   * Deflag
-
-###Crowdflower
-
-####Does something with httparty
 
 ## Contribute
 
@@ -120,7 +160,7 @@ CrowdFlower.connect!( 'CrowdFlower.yml' )
 
 ## Team
 
-This gem is made by CrowdFlower engineers. Check out the [CrowdFlower Team](http://www.crowdflower.com/team)!
+Check out the [CrowdFlower Team](http://www.crowdflower.com/team)!
 
 ## License
 
