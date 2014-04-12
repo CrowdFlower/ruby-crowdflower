@@ -47,7 +47,6 @@ CrowdFlower.connect!( 'CrowdFlower.yaml' )
 require 'crowdflower'
 
 API_KEY = "YOUR_API_KEY"
-# API_KEY = "y7AyiTd1F1B8jTvwQaKT"
 DOMAIN_BASE = "https://api.crowdflower.com"
 
 CrowdFlower::Job.connect! API_KEY, DOMAIN_BASE
@@ -61,7 +60,6 @@ job = CrowdFlower::Job.new(418404)
 require 'crowdflower'
 
 API_KEY = "YOUR_API_KEY"
-# API_KEY = "y7AyiTd1F1B8jTvwQaKT"
 DOMAIN_BASE = "https://api.crowdflower.com"
 
 CrowdFlower::Job.connect! API_KEY, DOMAIN_BASE
