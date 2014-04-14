@@ -196,15 +196,20 @@ unit.judgments(444154130)
 ```ruby
 unit.create("glitter_color"=>"blue") 
 unit.create("glitter_color"=>"blue", gold: true) 
+```
 
 #####Create from copy of existing unit
 
 ```ruby
 unit.copy(unit_id, job_id, data = {})
 unit.copy(444154130, 418404, "glitter_color"=>"blue")
+```
 
 #####Split
+
+```ruby
 unit.split(on, with = " ")
+```
 
 #####Update 
 
