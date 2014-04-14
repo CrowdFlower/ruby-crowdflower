@@ -41,7 +41,7 @@ CrowdFlower.connect!( 'CrowdFlower.yaml' )
 ```
 
 ## Usage and Examples 
-#####[Example Job](https://api.crowdflower.com/v1/jobs/418404/) - referenced throught the following examples. 
+#####[Example Job](https://api.crowdflower.com/v1/jobs/418404/) - referenced throught the following examples (must be signed in to view).
 
 ### Access Job Info
 
