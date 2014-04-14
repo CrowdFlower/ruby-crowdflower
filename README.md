@@ -166,177 +166,187 @@ job.update_tags("fun", "glitter", "crowdshop")
 job.remove_tags("crowdshop") 
 ```
 
-#####UNITS - http://api.crowdflower.com/v1/jobs/418404/units
+#####UNITS: http://api.crowdflower.com/v1/jobs/418404/units
 
 ```ruby
 unit = CrowdFlower::Unit.new(job)
 ```
 
-#####View
+#####UNIT.ALL: View all units or count all units in a job; same result as job.units.
 
 ```ruby
 unit.all 
 unit.all.count
+```
+
+#####UNIT.GET: Get info about a unit by passing in the unit's ID.units.
+
+```ruby
 unit.get(unit_id)
 ```
-#####Check on a unit
+#####UNIT.PING: Returns the status of all units in a job.
 
 ```ruby
 unit.ping
 ```
 
-#####View a unit's judgments
+#####UNIT.JUDGMENTS: View all judgments for a specific unit by passing in the unit_id.
 
 ```ruby
 unit.judgments(unit_id)
 unit.judgments(444154130)
 ```
 
-#####Create from scratch
+#####UNIT.CREATE: Create a new unit.
 
 ```ruby
 unit.create("glitter_color"=>"blue") 
 unit.create("glitter_color"=>"blue", gold: true) 
 ```
 
-#####Create from copy of existing unit
+#####UNIT.COPY: Copy an existing unit.
 
 ```ruby
 unit.copy(unit_id, job_id, data = {})
 unit.copy(444154130, 418404, "glitter_color"=>"blue")
 ```
 
-#####Split
+#####UNIT.SPLIT: In cases where multiple values are stored in the cells of the same column, you can use the Split Column function to parse the data into two or more columns by specifying a delimiter (most typically a newline character).
 
 ```ruby
 unit.split(on, with = " ")
 ```
 
-#####Update 
+#####UNIT.UPDATE: Update the value of a unit's key.  
 
 ```ruby
 unit.update(unit_id, params)
 unit.update(444154130, "glitter_color"=>"green")
 ```
 
-#####Make Gold (make the unit a test question)
+#####UNIT.MAKE_GOLD: Turn an existing unit into a test question (gold) unit.
 
 ```ruby
 unit.make_gold(unit_id)
 ```
 
-#####CANCEL
+#####UNIT.CANCEL: Cancel a unit.
 
 ```ruby
 unit.cancel(unit_id)
 ```
 
-#####DELETE
+#####UNIT.DELETE: Delete a unit.
 
 ```ruby
 unit.delete(unit_id)
 ```
 
-#####REQUEST_MORE_JUDGMENTS: nb_judgments = number of additional judgments
+#####UNIT.REQUEST_MORE_JUDGMENTS: Get more answers (judgments) for a specific unit by using this method with the unit's id and the amount of requested judgments passed as params. 
 
 ```ruby
 unit.request_more_judgments(unit_id, nb_judgments = 1)
 ```
 
-#####ORDERS
+#####ORDER: Set up an order using your job's id.
 
 ```ruby
 order = CrowdFlower::Order.new(job)
+```
+
+#####ORDER.DEBIT: When a job has data(units) and properly working cml it will be ready to launch. Going to the launch tab on the job dashboard is the same as calling order.debit. 
+
+```ruby
 order.debit(units_count, channels)
 order.debit(6, "all")
 ```
 
-#####PAUSE - can only call on running jobs
+#####PAUSE: Only can be called on running jobs.
 
 ```ruby
 job.pause
 ```
 
-#####RESUME - can only call on paused or complete jobs
+#####RESUME: Only can be called on paused or completed jobs.
 
 ```ruby
 job.resume
 ```
 
-#####CANCEL - only on running or paused jobs
+#####CANCEL: Only can be called on paused jobs.
 
 ```ruby
 job.cancel
 ```
 
-#####UPDATE - access of the json attributes (see GET)
+#####UPDATE: Update any of the JSON attributes that [get](https://github.com/dolores/ruby-crowdflower/tree/chore/improve_readme#get---httpscrowdflowercomjobs418404json) can access. 
 
 ```ruby
 job.update
 job.update("project_number"=>"PN123")
 ```
 
-#####DELETE
+#####DELETE: Delete the entire job.
 
 ```ruby
 job.delete
 ```
 
-#####WORKERS - http://api.crowdflower.com/v1/jobs/418404/workers
+#####WORKERS: http://api.crowdflower.com/v1/jobs/418404/workers
 
 ```ruby
 worker = CrowdFlower::Worker.new(job) 
 ```
 
-#####BONUS: Award a bonus in cents, 200 for $2.00 and (optionally) add a message
+#####WORKER.BONUS: Award a bonus in cents, 200 for $2.00 and (optionally) add a message
 
 ```ruby
 worker.bonus(worker_id, amount, reason=nil)
 worker.bonus(23542619, 200, "You shoe shop like a pro! Thanks for the awesome answers!")
 ```
 
-#####APPROVE: There isn't any documentation for this method. 
+#####WORKER.APPROVE: There isn't any documentation for this method. 
 
 ```ruby
 worker.approve(worker_id)
 worker.approve(14952322) 
 ```
-#####REJECT: Stops contributors from completing tasks, and removes the contributors judgments from a job. Try to only use when a job is running, otherwise the completed job will lose judgments and be unable to collect replacement ones. 
+#####WORKER.REJECT: Stops contributors from completing tasks, and removes the contributors judgments from a job. Try to only use when a job is running, otherwise the completed job will lose judgments and be unable to collect replacement ones. 
 
 ```ruby
 worker.reject(worker_id)
 worker.reject(14952322)
 ```
 
-#####BAN: There isn't any documentation for this method. 
+#####WORKER.BAN: There isn't any documentation for this method. 
 
 ```ruby
 worker.ban(worker_id)
 worker.ban(14952322)
 ```
 
-#####DEBAN: There isn't any documentation for this method. 
+#####WORKER.DEBAN: There isn't any documentation for this method. 
 
 ```ruby
 worker.deban(worker_id)
 worker.deban(14952322)
 ```
 
-#####NOTIFY: Sends a notification to a specific contributor. The contributor will see the message under their notifications. 
+#####WORKER.NOTIFY: Sends a notification to a specific contributor. The contributor will see the message under their notifications. 
 
 ```ruby
 worker.notify(worker_id, subject, message)
 worker.notify(23542619, "you earned a bonus!", "good job!")
 ```
 
-#####FLAG: Stops contributors from completing tasks. Their judgments remain in their current state of tainted or non-tainted and will not be thrown away.
+#####WORKER.FLAG: Stops contributors from completing tasks. Their judgments remain in their current state of tainted or non-tainted and will not be thrown away.
 
 ```ruby
 worker.flag(worker_id, reason=nil)
 worker.flag(14952322, "testing")
 ```
 
-#####DEFLAG: Allows a flagged contributor to continue completing tasks.
+#####WORKER.DEFLAG: Allows a flagged contributor to continue completing tasks.
 ```ruby
 worker.deflag(worker_id)
 worker.deflag(14952322)
@@ -385,12 +395,6 @@ job.status["ordered_units"]
 ```ruby
 job.download_csv(type, filename, opts) 
 job.download_csv(full, nil, force:true)
-```
-
-#####WORKERS: http://api.crowdflower.com/v1/jobs/418404/workers
-
-```ruby
-worker = CrowdFlower::Worker.new(job)
 ```
 
 ## Helpful Documentation Links
