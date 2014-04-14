@@ -401,9 +401,9 @@ job.download_csv(full, nil, force:true)
 
 ## Helpful Documentation Links
 
-[Job Settings](http://success.crowdflower.com/customer/portal/articles/1373615-contributors---behavior-settings)
-[Data Management](http://success.crowdflower.com/customer/portal/articles/1288308-data)
-[Judgments](http://success.crowdflower.com/customer/portal/articles/1366723-job-settings---judgments)
+* [Job Settings](http://success.crowdflower.com/customer/portal/articles/1373615-contributors---behavior-settings)
+* [Data Management](http://success.crowdflower.com/customer/portal/articles/1288308-data)
+* [Judgments](http://success.crowdflower.com/customer/portal/articles/1366723-job-settings---judgments)
 [Workers](http://success.crowdflower.com/customer/portal/articles/1288319-contributors---active-contributors)
 
 ## Contribute
