@@ -6,7 +6,7 @@ Currently this is a toolkit for interacting with the CrowdFlower REST API. It ma
 
 1. [Getting Started](#getting-started)
 2. [Usage and Examples](#usage-and-examples)
-3. [Helpful Documentation Links](#api-documentation)
+3. [Helpful Documentation Links](#helpful-documentation-links)
 4. [Contribute](#contribute)
 5. [Team](#team)
 6. [License](#license)
