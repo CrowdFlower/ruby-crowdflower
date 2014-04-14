@@ -318,14 +318,16 @@ worker.reject(worker_id)
 worker.reject(14952322)
 ```
 
-#####WORKER.BAN: There isn't any documentation for this method. 
+#####WORKER.BAN: Ban a specific contributor from accessing any CrowdFlower job. This makes valid contributors angry so be sure to use with caution.
+
 
 ```ruby
 worker.ban(worker_id)
 worker.ban(14952322)
 ```
 
-#####WORKER.DEBAN: There isn't any documentation for this method. 
+#####WORKER.DEBAN: Removes the ban on that contributor for when we make mistakes (it happens).
+ 
 
 ```ruby
 worker.deban(worker_id)
