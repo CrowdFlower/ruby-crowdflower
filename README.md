@@ -86,10 +86,9 @@ job_two = job_one.copy
 
 ### Available Features (Methods)
 
+#####GET - https://crowdflower.com/jobs/418404.json
+
 ```ruby
-#################################################
-# GET - https://crowdflower.com/jobs/418404.json
-#################################################
 job.get["css"]
 job.get["auto_order"]
 job.get["units_remain_finalized"]
@@ -140,111 +139,152 @@ job.get["state"]
 job.get["variable_judgments_mode"]
 job.get["custom_key"]
 job.get["options"]
+```
 
-#################################################
-# UPLOAD (data to create units) 
-#################################################
+#####UPLOAD (data to create units) 
+
+```ruby
 job.upload(filename, type, opts)
 job.upload("crowdshopping.csv", "text/csv")
+```
 
-#################################################
-# CHANNELS - http://api.crowdflower.com/v1/jobs/418404/channels
-#################################################
+#####CHANNELS - http://api.crowdflower.com/v1/jobs/418404/channels
+
+```ruby
 job.channels 
 job.enable_channels(channels)
 job.enable_channels("cf_internal")
+```
 
-#################################################
-# TAGS - https://api.crowdflower.com/jobs/418404/tags
-#################################################
+#####TAGS - https://api.crowdflower.com/jobs/418404/tags
+
+```ruby
 tags = "shoes", "shopping", "fashion"
 job.add_tags(tags)
 job.update_tags("fun", "glitter", "crowdshop")
 job.remove_tags("crowdshop") 
+```
 
-#################################################
-# UNITS - http://api.crowdflower.com/v1/jobs/418404/units
-#################################################
+#####UNITS - http://api.crowdflower.com/v1/jobs/418404/units
+
+```ruby
 unit = CrowdFlower::Unit.new(job)
+```
 
-# View
+#####View
+
+```ruby
 unit.all 
 unit.all.count
 unit.get(unit_id)
+```
+#####Check on a unit
 
-# Check on a unit
+```ruby
 unit.ping
+```
 
-# View a unit's judgments
+#####View a unit's judgments
+
+```ruby
 unit.judgments(unit_id)
 unit.judgments(444154130)
+```
 
-# Create from scratch
+#####Create from scratch
+
+```ruby
 unit.create("glitter_color"=>"blue") 
 unit.create("glitter_color"=>"blue", gold: true) 
 
-# Create from copy of existing unit
+#####Create from copy of existing unit
+
+```ruby
 unit.copy(unit_id, job_id, data = {})
 unit.copy(444154130, 418404, "glitter_color"=>"blue")
 
-# Split
+#####Split
 unit.split(on, with = " ")
 
-# Update 
+#####Update 
+
+```ruby
 unit.update(unit_id, params)
 unit.update(444154130, "glitter_color"=>"green")
+```
 
-# Make Gold (make the unit a test question)
+#####Make Gold (make the unit a test question)
+
+```ruby
 unit.make_gold(unit_id)
+```
 
-# Cancel
+#####Cancel
+
+```ruby
 unit.cancel(unit_id)
+```
 
-# Delete
+#####Delete
+
+```ruby
 unit.delete(unit_id)
+```
 
-# Request more judgments - nb_judgments = number of additional judgments
+#####Request more judgments - nb_judgments = number of additional judgments
+
+```ruby
 unit.request_more_judgments(unit_id, nb_judgments = 1)
+```
 
-#################################################
-# ORDERS
-#################################################
+#####ORDERS
+
+```ruby
 order = CrowdFlower::Order.new(job)
 order.debit(units_count, channels)
 order.debit(6, "all")
+```
 
-#################################################
-# PAUSE - can only call on running jobs
-#################################################
+#####PAUSE - can only call on running jobs
+
+```ruby
 job.pause
+```
 
-#################################################
-# RESUME - can only call on paused or complete jobs
-#################################################
+#####RESUME - can only call on paused or complete jobs
+
+```ruby
 job.resume
+```
 
-#################################################
-# CANCEL - only on running or paused jobs
-#################################################
+#####CANCEL - only on running or paused jobs
+
+```ruby
 job.cancel
+```
 
-#################################################
-# UPDATE - access of the json attributes (see GET)
-#################################################
+#####UPDATE - access of the json attributes (see GET)
+
+```ruby
 job.update
 job.update("project_number"=>"PN123")
+```
 
-#################################################
-# DELETE
-#################################################
+#####DELETE
+
+```ruby
 job.delete
+```
 
-#################################################
-# WORKERS - http://api.crowdflower.com/v1/jobs/418404/workers
-#################################################
+#####WORKERS - http://api.crowdflower.com/v1/jobs/418404/workers
+
+```ruby
 worker = CrowdFlower::Worker.new(job) 
+```
 
-# Award a bonus in cents, 200 for $2.00
+#####Award a bonus in cents, 200 for $2.00
+
+```ruby
 worker.bonus(worker_id, amount, reason=nil)
 worker.bonus(23542619, 10, "good job!")
 
@@ -268,10 +308,11 @@ worker.flag(14952322, "testing")
 
 worker.deflag(worker_id)
 worker.deflag(14952322)
+```
 
-#################################################
-# JUDGMENTS - http://api.crowdflower.com/v1/jobs/418404/units/judgments
-#################################################
+#####JUDGMENTS - http://api.crowdflower.com/v1/jobs/418404/units/judgments
+
+```ruby
 judgment = CrowdFlower::Judgment.new(job) 
 judgment.all
 judgment.get(judgment_id)
@@ -284,15 +325,17 @@ judgment.reject(1239592918)
 # Return every judgment for the given unit
 job.units.judgments(unit_id_number) 
 job.units.judgments(444154130) 
+```
 
-#################################################
-# LEGEND - http://api.crowdflower.com/v1/jobs/418404/legend
-#################################################
+#####LEGEND - http://api.crowdflower.com/v1/jobs/418404/legend
+
+```ruby
 job.legend
+```
 
-#################################################
-# STATUS - parsed json response or access attributes like GET
-#################################################
+#####STATUS - parsed json response or access attributes like GET
+
+```ruby
 job.status
 job.status["golden_units"]
 job.status["all_judgments"]
@@ -303,16 +346,18 @@ job.status["all_units"]
 job.status["completed_non_gold_estimate"]
 job.status["completed_gold_estimate"]
 job.status["ordered_units"]
+```
 
-#################################################
-# DOWNLOAD_CSV - get csv or zip back of job results
-#################################################
+#####DOWNLOAD_CSV - get csv or zip back of job results
+
+```ruby
 job.download_csv(type, filename, opts) 
 job.download_csv(full, nil, force:true)
+```
 
-#################################################
-# WORKERS - http://api.crowdflower.com/v1/jobs/418404/workers
-#################################################
+#####WORKERS - http://api.crowdflower.com/v1/jobs/418404/workers
+
+```ruby
 worker = CrowdFlower::Worker.new(job)
 
 worker.bonus(worker_id, amount, reason=nil)
