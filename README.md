@@ -41,7 +41,7 @@ CrowdFlower.connect!( 'CrowdFlower.yaml' )
 ```
 
 ## Usage and Examples 
-#####[Example Job](https://api.crowdflower.com/v1/jobs/418404/) - referenced throught the following examples (must be signed in to view).
+#####[Example Job](https://api.crowdflower.com/v1/jobs/418404/) - referenced throught the following examples (must be signed in to view).3
 
 ### Access Job Info
 
@@ -225,19 +225,19 @@ unit.update(444154130, "glitter_color"=>"green")
 unit.make_gold(unit_id)
 ```
 
-#####Cancel
+#####CANCEL
 
 ```ruby
 unit.cancel(unit_id)
 ```
 
-#####Delete
+#####DELETE
 
 ```ruby
 unit.delete(unit_id)
 ```
 
-#####Request more judgments - nb_judgments = number of additional judgments
+#####REQUEST_MORE_JUDGMENTS: nb_judgments = number of additional judgments
 
 ```ruby
 unit.request_more_judgments(unit_id, nb_judgments = 1)
@@ -288,30 +288,56 @@ job.delete
 worker = CrowdFlower::Worker.new(job) 
 ```
 
-#####Award a bonus in cents, 200 for $2.00
+#####BONUS: Award a bonus in cents, 200 for $2.00 and (optionally) add a message
 
 ```ruby
 worker.bonus(worker_id, amount, reason=nil)
-worker.bonus(23542619, 10, "good job!")
+worker.bonus(23542619, 200, "You shoe shop like a pro! Thanks for the awesome answers!")
+```
 
+#####APPROVE: There isn't any documentation for this method. 
+
+```ruby
 worker.approve(worker_id)
 worker.approve(14952322) 
+```
+#####REJECT: Stops contributors from completing tasks, and removes the contributors judgments from a job. Try to only use when a job is running, otherwise the completed job will lose judgments and be unable to collect replacement ones. 
 
+```ruby
 worker.reject(worker_id)
 worker.reject(14952322)
+```
 
+#####BAN: There isn't any documentation for this method. 
+
+```ruby
 worker.ban(worker_id)
 worker.ban(14952322)
+```
 
+#####DEBAN: There isn't any documentation for this method. 
+
+```ruby
 worker.deban(worker_id)
 worker.deban(14952322)
+```
 
+#####NOTIFY: Sends a notification to a specific contributor. The contributor will see the message under their notifications. 
+
+```ruby
 worker.notify(worker_id, subject, message)
 worker.notify(23542619, "you earned a bonus!", "good job!")
+```
 
+#####FLAG: Stops contributors from completing tasks. Their judgments remain in their current state of tainted or non-tainted and will not be thrown away.
+
+```ruby
 worker.flag(worker_id, reason=nil)
 worker.flag(14952322, "testing")
+```
 
+#####DEFLAG: Allows a flagged contributor to continue completing tasks.
+```ruby
 worker.deflag(worker_id)
 worker.deflag(14952322)
 ```
@@ -339,7 +365,7 @@ job.units.judgments(444154130)
 job.legend
 ```
 
-#####STATUS - parsed json response or access attributes like GET
+#####STATUS: parsed JSON response or access attributes like GET
 
 ```ruby
 job.status
@@ -354,37 +380,25 @@ job.status["completed_gold_estimate"]
 job.status["ordered_units"]
 ```
 
-#####DOWNLOAD_CSV - get csv or zip back of job results
+#####DOWNLOAD_CSV: Downloads a CSV of the job with results, sometimes as csv and sometimes as a zip containing the CSV.
 
 ```ruby
 job.download_csv(type, filename, opts) 
 job.download_csv(full, nil, force:true)
 ```
 
-#####WORKERS - http://api.crowdflower.com/v1/jobs/418404/workers
+#####WORKERS: http://api.crowdflower.com/v1/jobs/418404/workers
 
 ```ruby
 worker = CrowdFlower::Worker.new(job)
-
-worker.bonus(worker_id, amount, reason=nil)
-
-worker.approve(worker_id)
-
-worker.reject(worker_id)
-
-worker.ban(worker_id)
-
-worker.deban(worker_id)
-
-worker.notify(worker_id, subject, message)
-
-worker.flag(worker_id, reason=nil)
-
-worker.deflag(worker_id)
 ```
 
-## Helpful Documentation
-Judgments: http://success.crowdflower.com/customer/portal/articles/1366723-job-settings---judgments
+## Helpful Documentation Links
+
+[Job Settings](http://success.crowdflower.com/customer/portal/articles/1373615-contributors---behavior-settings)
+[Data Management](http://success.crowdflower.com/customer/portal/articles/1288308-data)
+[Judgments](http://success.crowdflower.com/customer/portal/articles/1366723-job-settings---judgments)
+[Workers](http://success.crowdflower.com/customer/portal/articles/1288319-contributors---active-contributors)
 
 ## Contribute
 
