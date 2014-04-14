@@ -6,9 +6,10 @@ Currently this is a toolkit for interacting with the CrowdFlower REST API. It ma
 
 1. [Getting Started](#getting-started)
 2. [Usage and Examples](#usage-and-examples)
-3. [Contribute](#contribute)
-4. [Team](#team)
-5. [License](#license)
+3. [API Documentation](#api-documentation)
+4. [Contribute](#contribute)
+5. [Team](#team)
+6. [License](#license)
 
 ## Getting Started
 
@@ -239,6 +240,36 @@ job.update("project_number"=>"PN123")
 job.delete
 
 #################################################
+# WORKERS - http://api.crowdflower.com/v1/jobs/418404/workers
+#################################################
+worker = CrowdFlower::Worker.new(job) 
+
+# Award a bonus in cents, 200 for $2.00
+worker.bonus(worker_id, amount, reason=nil)
+worker.bonus(23542619, 10, "good job!")
+
+worker.approve(worker_id)
+worker.approve(14952322) 
+
+worker.reject(worker_id)
+worker.reject(14952322)
+
+worker.ban(worker_id)
+worker.ban(14952322)
+
+worker.deban(worker_id)
+worker.deban(14952322)
+
+worker.notify(worker_id, subject, message)
+worker.notify(23542619, "you earned a bonus!", "good job!")
+
+worker.flag(worker_id, reason=nil)
+worker.flag(14952322, "testing")
+
+worker.deflag(worker_id)
+worker.deflag(14952322)
+
+#################################################
 # JUDGMENTS - http://api.crowdflower.com/v1/jobs/418404/units/judgments
 #################################################
 judgment = CrowdFlower::Judgment.new(job) 
@@ -300,6 +331,9 @@ worker.flag(worker_id, reason=nil)
 
 worker.deflag(worker_id)
 ```
+
+## Helpful Documentation
+Judgments: http://success.crowdflower.com/customer/portal/articles/1366723-job-settings---judgments
 
 ## Contribute
 
