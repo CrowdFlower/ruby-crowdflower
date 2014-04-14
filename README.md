@@ -369,7 +369,7 @@ job.units.judgments(unit_id_number)
 job.units.judgments(444154130) 
 ```
 
-#####LEGEND - http://api.crowdflower.com/v1/jobs/418404/legend
+#####LEGEND: Returns all of the cml in a job; shows all questions and available answers, see example: http://api.crowdflower.com/v1/jobs/418404/legend.
 
 ```ruby
 job.legend
