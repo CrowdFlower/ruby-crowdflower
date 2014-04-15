@@ -305,12 +305,6 @@ worker.bonus(worker_id, amount, reason=nil)
 worker.bonus(23542619, 200, "You shoe shop like a pro! Thanks for the awesome answers!")
 ```
 
-#####WORKER.APPROVE: There isn't any documentation for this method. 
-
-```ruby
-worker.approve(worker_id)
-worker.approve(14952322) 
-```
 #####WORKER.REJECT: Stops contributors from completing tasks, and removes the contributors judgments from a job. Try to only use when a job is running, otherwise the completed job will lose judgments and be unable to collect replacement ones. 
 
 ```ruby
