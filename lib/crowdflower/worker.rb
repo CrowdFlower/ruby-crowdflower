@@ -20,10 +20,6 @@ module CrowdFlower
       connection.post( "#{resource_uri}/#{worker_id}/bonus", :body => params )
     end
     
-    def approve( worker_id )
-      connection.put( "#{resource_uri}/#{worker_id}/approve", :headers => { "Content-Length" => "0" } )
-    end
-    
     def reject( worker_id )
       connection.put( "#{resource_uri}/#{worker_id}/reject", :headers => { "Content-Length" => "0" } )
     end
