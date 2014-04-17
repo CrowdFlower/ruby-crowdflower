@@ -12,7 +12,7 @@ A toolkit for interacting with CrowdFlower via the REST API.
 This is alpha software. Have fun!
 
 EOF
-    gem.email = "brian@doloreslabs.com"
+    gem.email = "brian@crowdflower.com"
     gem.homepage = "http://github.com/dolores/ruby-crowdflower"
     gem.authors = ["Brian P O'Rourke", "Chris Van Pelt"]
     gem.add_dependency 'httparty', '>= 0.7.4'
@@ -30,8 +30,8 @@ task :refresh_builder => [:build] do
   `cd ../builder && bin/thor merb:gem:redeploy`
 end
 
-require 'rake/rdoctask'
-Rake::RDocTask.new do |rdoc|
+require 'rdoc/task'
+RDoc::Task.new do |rdoc|
   if File.exist?('VERSION.yml')
     config = YAML.load(File.read('VERSION.yml'))
     version = "#{config[:major]}.#{config[:minor]}.#{config[:patch]}"
