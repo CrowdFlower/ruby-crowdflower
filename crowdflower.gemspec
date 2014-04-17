@@ -9,9 +9,9 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Brian P O'Rourke", "Chris Van Pelt"]
-  s.date = "2014-04-01"
+  s.date = "2014-04-17"
   s.description = "A toolkit for interacting with CrowdFlower via the REST API.\n\nThis is alpha software. Have fun!\n\n"
-  s.email = "brian@doloreslabs.com"
+  s.email = "brian@crowdflower.com"
   s.extra_rdoc_files = [
     "LICENSE",
     "README.md"
