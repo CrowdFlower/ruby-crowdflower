@@ -13,11 +13,7 @@ Currently this is a toolkit for interacting with the CrowdFlower REST API. It ma
 
 ## Getting Started
 
-#####Require this gem in your ruby file:
-    
-    require 'crowdflower'
-
-#####Or add this line to your application's Gemfile:
+#####Add this line to your application's Gemfile:
 
     $ gem 'crowdflower'
 
@@ -29,6 +25,9 @@ Currently this is a toolkit for interacting with the CrowdFlower REST API. It ma
 
     $ gem install crowdflower
 
+#####And require the gem in your ruby file as:
+    
+    require 'crowdflower'
 
 This gem makes use of [CrowdFlower's API](http://success.crowdflower.com/customer/portal/articles/1288323-api-documentation). To find your API key, click on your name in the upper right hand corner and select "Account" from the drop down. To create an account click [here](https://id.crowdflower.com/registrations/new?redirect_url=https%3A%2F%2Fcrowdflower.com%2Fjobs&app=make&__hssc=14529640.6.1397164984954&__hstc=14529640.8f31cd290788fdc43f4da6707700cde6.1396463439689.1397160539873.1397164984954.16&hsCtaTracking=c85b8d58-818e-4f19-a27e-83e8f55da890%7C583ca9bc-a025-43b9-806a-b329df96a8c6).
 
