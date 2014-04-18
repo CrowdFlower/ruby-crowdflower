@@ -278,7 +278,7 @@ job.resume
 job.cancel
 ```
 
-#####UPDATE: Update any of the JSON attributes that [get](https://github.com/dolores/ruby-crowdflower/blob/8e234cfd665b79d85f0a0d723baa80d21b347c3b/README.md#get---httpscrowdflowercomjobs418404json) can access. 
+#####UPDATE: Update any of the JSON attributes that get can access. Scroll up to GET to see the full list of accessible attributes. 
 
 ```ruby
 job.update
