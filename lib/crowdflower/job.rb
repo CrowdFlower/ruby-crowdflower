@@ -83,8 +83,8 @@ module CrowdFlower
     end
     
     def download_csv(type = :full, filename = nil)
-      filename ||= "#{type.to_s[0].chr}#{@id}.csv"
-      res = connection.get("#{resource_uri}/#{@id}.csv", {:format => :csv, :query => {:type => type}})
+      filename ||= "#{type.to_s[0].chr}#{@id}.zip"
+      res = connection.get("#{resource_uri}/#{@id}.csv", {:format => "zip", :query => {:type => type}})
       self.class.verify_response res
       puts "Status... #{res.code.inspect}"
       if res.code == 202
