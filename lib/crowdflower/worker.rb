@@ -28,8 +28,8 @@ module CrowdFlower
       connection.put("#{resource_uri}/#{worker_id}/ban", :body => { :message => message }, :headers => { "Content-Length" => "0" })
     end
     
-    def deban(worker_id, message)
-      connection.put("#{resource_uri}/#{worker_id}/deban", :body => { :message => message }, :headers => { "Content-Length" => "0" })
+    def deban(worker_id)
+      connection.put("#{resource_uri}/#{worker_id}/deban", :headers => { "Content-Length" => "0" })
     end
     
     def amt_notify( worker_id, subject, message )
