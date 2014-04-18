@@ -1,45 +1,35 @@
-# ruby-crowdflower
+CrowdFlower API Gem
+========
+Currently this is a toolkit for interacting with the CrowdFlower REST API. It may potentially become a complete Ruby gem for accessing and editing [CrowdFlower](http://crowdflower.com) jobs. 
 
-A toolkit for interacting with CrowdFlower via the REST API.
+## Table of Contents
 
-This is alpha software. Have fun!
+1. [Getting Started](#getting-started)
+2. [Usage and Examples](#usage-and-examples)
+3. [Helpful Documentation Links](#helpful-documentation-links)
+4. [Contribute](#contribute)
+5. [Team](#team)
+6. [License](#license)
 
-Example Usage
--------------
+## Getting Started
 
-Specifiy either your api key or a yaml file containing the key:
-  
-  CrowdFlower.connect!( 'CrowdFlower.yml' )
-  
-Upload a CSV file for a job:
+#####Add this line to your application's Gemfile:
 
-  CrowdFlower::Job.upload( File.dirname(__FILE__) + "/data.csv", "text/csv" )
+    $ gem 'crowdflower'
 
-Copy an existing job into a new one:
-  
-  new_job = job.copy( :all_units => true )
-  
-Check the status of a job:
+#####Then execute:
 
-  job.status["tainted_judgments"]
+    $ bundle install
 
+#####Or install it yourself as:
 
+    $ gem install crowdflower
 
-Contributing
-------------
+#####And require the gem in your ruby file as:
+    
+    require 'crowdflower'
 
-1. Fork ruby-crowdflower
-2. Create a topic branch - `git checkout -b my_branch`
-3. Make your feature addition or bug fix and add tests for it.
-4. Commit, but do not mess with the rakefile, version, or history.
-5. Push to your branch - `git push origin my_branch`
-6. Create an Issue with a link to your branch
-
-Copyright
----------
-
-Copyright &copy; 2014 [CrowdFlower](http://www.crowdflower.com/). See LICENSE for details.
-" from the drop down. To create an account click [here](https://id.crowdflower.com/registrations/new?redirect_url=https%3A%2F%2Fcrowdflower.com%2Fjobs&app=make&__hssc=14529640.6.1397164984954&__hstc=14529640.8f31cd290788fdc43f4da6707700cde6.1396463439689.1397160539873.1397164984954.16&hsCtaTracking=c85b8d58-818e-4f19-a27e-83e8f55da890%7C583ca9bc-a025-43b9-806a-b329df96a8c6).
+This gem makes use of [CrowdFlower's API](http://success.crowdflower.com/customer/portal/articles/1288323-api-documentation). To find your API key, click on your name in the upper right hand corner and select "Account" from the drop down. To create an account click [here](https://id.crowdflower.com/registrations/new?redirect_url=https%3A%2F%2Fcrowdflower.com%2Fjobs&app=make&__hssc=14529640.6.1397164984954&__hstc=14529640.8f31cd290788fdc43f4da6707700cde6.1396463439689.1397160539873.1397164984954.16&hsCtaTracking=c85b8d58-818e-4f19-a27e-83e8f55da890%7C583ca9bc-a025-43b9-806a-b329df96a8c6).
 
 #####Specify your api key directly in your code or store it in a yaml file:
 
@@ -288,7 +278,7 @@ job.resume
 job.cancel
 ```
 
-#####UPDATE: Update any of the JSON attributes that [get](https://github.com/dolores/ruby-crowdflower/tree/chore/improve_readme#get---httpscrowdflowercomjobs418404json) can access. 
+#####UPDATE: Update any of the JSON attributes that get can access. Scroll up to GET to see the full list of accessible attributes. 
 
 ```ruby
 job.update
