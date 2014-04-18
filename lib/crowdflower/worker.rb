@@ -24,12 +24,12 @@ module CrowdFlower
       connection.put( "#{resource_uri}/#{worker_id}/reject", :headers => { "Content-Length" => "0" } )
     end
     
-    def ban( worker_id )
-      connection.put( "#{resource_uri}/#{worker_id}/ban", :headers => { "Content-Length" => "0" } )
+    def ban(worker_id, message)
+      connection.put("#{resource_uri}/#{worker_id}/ban", :body => { :message => message }, :headers => { "Content-Length" => "0" })
     end
     
-    def deban( worker_id )
-      connection.put( "#{resource_uri}/#{worker_id}/deban", :headers => { "Content-Length" => "0" } )
+    def deban(worker_id, message)
+      connection.put("#{resource_uri}/#{worker_id}/deban", :body => { :message => message }, :headers => { "Content-Length" => "0" })
     end
     
     def amt_notify( worker_id, subject, message )
@@ -48,8 +48,8 @@ module CrowdFlower
       connection.put( "#{resource_uri}/#{worker_id}/flag", :body => { :reason => reason }, :headers => { "Content-Length" => "0" } )
     end
     
-    def deflag( worker_id )
-      connection.put( "#{resource_uri}/#{worker_id}/deflag",  :headers => { "Content-Length" => "0" } )
+    def deflag(worker_id, message)
+      connection.put( "#{resource_uri}/#{worker_id}/deflag", :body => { :message => message }, :headers => { "Content-Length" => "0" })
     end
   end
 end
