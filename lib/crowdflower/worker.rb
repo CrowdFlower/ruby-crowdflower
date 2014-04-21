@@ -24,8 +24,8 @@ module CrowdFlower
       connection.put( "#{resource_uri}/#{worker_id}/reject", :headers => { "Content-Length" => "0" } )
     end
     
-    def ban(worker_id, reason)
-      connection.put("#{resource_uri}/#{worker_id}/ban", :body => { :reason => reason }, :headers => { "Content-Length" => "0" })
+    def ban(worker_id)
+      connection.put("#{resource_uri}/#{worker_id}/ban", :headers => { "Content-Length" => "0" })
     end
     
     def deban(worker_id)
