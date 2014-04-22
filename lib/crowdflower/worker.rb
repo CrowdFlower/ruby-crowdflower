@@ -46,11 +46,10 @@ module CrowdFlower
 
     def flag( worker_id, reason = nil, persist = false )
       params = {
-      :headers => { "Content-Length" => "0" }, 
       :reason => reason, 
       :persist => persist
       }
-      connection.put( "#{resource_uri}/#{worker_id}/flag", :query => params )
+      connection.put( "#{resource_uri}/#{worker_id}/flag", :body => params, :headers => { "Content-Length" => "0" })
     end
     
     def deflag(worker_id, reason)
