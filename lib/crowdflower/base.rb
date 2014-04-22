@@ -1,6 +1,17 @@
 module CrowdFlower
   @@key = nil
   @@domain = nil
+  @@request_hook = Proc.new do |*, &block|
+    block.call
+  end
+
+  def self.request_hook=(hook)
+    @@request_hook = hook
+  end
+
+  def self.request_hook
+    @@request_hook
+  end
 
   class UsageError < StandardError ; end
 
@@ -59,7 +70,10 @@ module CrowdFlower
         options ||= {}
         options[:query] = (default_params.merge(options[:query] || {}))
         options[:headers] = (self.class.default_options[:headers].merge(options[:headers] || {}))
-        self.class.send(method_id, url(path), options)
+
+        CrowdFlower.request_hook.call(method_id, path, options) do
+          self.class.send(method_id, url(path), options)
+        end
       else
         super
       end
