@@ -24,12 +24,12 @@ module CrowdFlower
       connection.put( "#{resource_uri}/#{worker_id}/reject", :headers => { "Content-Length" => "0" } )
     end
     
-    def ban( worker_id )
-      connection.put( "#{resource_uri}/#{worker_id}/ban", :headers => { "Content-Length" => "0" } )
+    def ban(worker_id)
+      connection.put("#{resource_uri}/#{worker_id}/ban", :headers => { "Content-Length" => "0" })
     end
     
-    def deban( worker_id )
-      connection.put( "#{resource_uri}/#{worker_id}/deban", :headers => { "Content-Length" => "0" } )
+    def deban(worker_id)
+      connection.put("#{resource_uri}/#{worker_id}/deban", :headers => { "Content-Length" => "0" })
     end
     
     def amt_notify( worker_id, subject, message )
@@ -44,12 +44,16 @@ module CrowdFlower
       connection.post("/workers/#{worker_id}/notifications", :body => { :notification => {:message => message }})
     end
 
-    def flag( worker_id, reason = nil )
-      connection.put( "#{resource_uri}/#{worker_id}/flag", :body => { :reason => reason }, :headers => { "Content-Length" => "0" } )
+    def flag( worker_id, reason = nil, persist = false )
+      params = {
+      :reason => reason, 
+      :persist => persist
+      }
+      connection.put( "#{resource_uri}/#{worker_id}/flag", :body => params, :headers => { "Content-Length" => "0" })
     end
     
-    def deflag( worker_id )
-      connection.put( "#{resource_uri}/#{worker_id}/deflag",  :headers => { "Content-Length" => "0" } )
+    def deflag(worker_id, reason)
+      connection.put( "#{resource_uri}/#{worker_id}/deflag", :body => { :reason => reason }, :headers => { "Content-Length" => "0" })
     end
   end
 end
