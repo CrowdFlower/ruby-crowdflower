@@ -21,14 +21,5 @@ module CrowdFlower
     def get(id)
       connection.get("#{resource_uri}/#{id}")
     end
-    
-    # Reject an individual Judgment.
-    # 
-    # *Admin-only && MTurk-only*
-    # 
-    # @param [String,Integer] id The CrowdFlower id for the judgment to reject.
-    def reject( id, reedo = false, do_amt_reject = false )
-      connection.put( "#{resource_uri}/#{id}/reject", :headers => { "Content-Length" => "0" }, :body => { :redo => reedo ? "true" : "false", :do_amt_reject => do_amt_reject ? "true" : "false" } )
-    end
   end
 end
