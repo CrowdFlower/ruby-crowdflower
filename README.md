@@ -253,11 +253,14 @@ unit.request_more_judgments(unit_id, nb_judgments = 1)
 order = CrowdFlower::Order.new(job)
 ```
 
-#####ORDER.DEBIT: When a job has data(units) and properly working cml it will be ready to launch. Going to the launch tab on the job dashboard is the same as calling order.debit. 
+#####ORDER.DEBIT: When a job has data (units) and properly working cml, it is ready to launch. The launch tab on the job dashboard is the same as calling order.debit. 
 
 ```ruby
-order.debit(units_count, channels)
-order.debit(6, "all")
+# defaults to on_demand channels
+order.debit(units_count, channels = ["on_demand"])
+
+# pass in specific channel name to launch job w/ that channel
+order.debit(6, "cf_internal")
 ```
 
 #####PAUSE: Only can be called on running jobs.
