@@ -29,7 +29,7 @@ module CrowdFlower
         :subject => subject,
         :message => message
       }
-      connection.post( "#{resource_uri}/#{worker_id}/notify", :query => params )
+      connection.post( "#{resource_uri}/#{worker_id}/notify", :body => params )
     end
 
     def notify(worker_id, message)
