@@ -339,10 +339,6 @@ judgment.all
 judgment.get(judgment_id)
 judgment.get(1239592918)
 
-# Admin only
-judgment.reject(judgment_id)
-judgment.reject(1239592918)
-
 # Return every judgment for the given unit
 job.units.judgments(unit_id_number) 
 job.units.judgments(444154130) 
