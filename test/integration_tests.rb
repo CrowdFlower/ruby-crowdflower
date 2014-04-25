@@ -225,7 +225,7 @@ wait_until { job_3.get["units_count"] == 13 }
 assert job_3.get["units_count"] == 13
 
 #################################################
-# WOKER METHODS - missing assetions
+# WORKER METHODS - missing assertions
 #################################################
 say "Worker tests are based on a dummy job and a CrowdFlower employee's worker_id"
 job       = CrowdFlower::Job.new(422830)
