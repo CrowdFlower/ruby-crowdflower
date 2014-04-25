@@ -7,6 +7,7 @@ require 'json'
 API_KEY   = ENV["API_KEY"]
 DOMAIN_BASE = ENV["DOMAIN_BASE"] || "https://api.localdev.crowdflower.com:8443"
 
+CrowdFlower::Job.connect! API_KEY, DOMAIN_BASE
 unless API_KEY && API_KEY.size > 3
   puts <<EOF
 
@@ -56,7 +57,6 @@ def assert_exception_raised expected_exception_class
   end
   raise "exception #{expected_exception_class} has not been raised"
 end
-
 
 def say(msg)
   $stdout.puts msg
@@ -115,14 +115,6 @@ assert job.units.ping['done'] == true
 say "Getting the units for this job."
 assert job.units.all.size == 8
 
-say "Copying the existing job to a new one."
-job2 = job.copy :all_units => true
-
-say "-- Waiting for CrowdFlower to finish copying the job."
-# You could also register a webhook to have CrowdFlower notify your
-# server.
-wait_until { job2.get["units_count"] == 8 }
-
 say "Checking the status of the job."
 assert job.status["tainted_judgments"] == 0
 
@@ -143,11 +135,29 @@ assert job.tags.map{|t| t["name"]} == ["testing_456"]
 job.add_tags ["testing_789"]
 assert job.tags.map{|t| t["name"]} == ["testing_456", "testing_789"]
 
+say "Copying the existing job to a new one."
+job2 = job.copy :all_units => true
+
+say "-- Waiting for CrowdFlower to finish copying the job."
+# You could also register a webhook to have CrowdFlower notify your
+# server.
+wait_until { job2.get["units_count"] == 8 }
+
 say "Ordering the job."
 order = CrowdFlower::Order.new(job)
 unit_count = 8
 order.debit(8)
 wait_until { job.get["state"].casecmp('running') == 0}
+
+say "Checking enabled_channels."
+assert !job.channels["enabled_channels"].empty?
+# To see exact list of enabled jobs:
+# p job.channels["enabled_channels"]
+
+say "Order job2 to check channels when specifying channel parameter."
+order = CrowdFlower::Order.new(job2)
+order.debit(8, "channel"=>"cf_internal")
+assert job2.channels["enabled_channels"] == ["cf_internal"]
 
 say "Canceling the unit."
 unit_id = job.units.all.to_a[0][0]
