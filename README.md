@@ -307,7 +307,7 @@ worker.bonus(worker_id, amount, reason=nil)
 worker.bonus(23542619, 200, "You shoe shop like a pro! Thanks for the awesome answers!")
 ```
 
-#####WORKER.REJECT: Stops contributors from completing tasks, and removes the contributors judgments from a job. Try to only use when a job is running, otherwise the completed job will lose judgments and be unable to collect replacement ones. 
+#####WORKER.REJECT: This method is only available to Pro and Enterprise users. Calling worker.reject stops a contributor from completing tasks and removes the contributor's judgments. It's best used when a job is still running because a completed job is unable to collect replacement judgments. 
 
 ```ruby
 worker.reject(worker_id)
