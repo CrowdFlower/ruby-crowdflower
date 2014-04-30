@@ -6,3 +6,4 @@ pkg
 tags/.loadpath
 /.project
 /.loadpath
+config/account_info.yml
