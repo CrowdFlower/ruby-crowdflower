@@ -3,8 +3,9 @@ $: << File.dirname(__FILE__) + "/../lib"
 require 'crowdflower'
 require 'json'
 
-API_KEY = YAML::load(File.read("api.yml")) 
-#add PN to yml file also 
+CONFIG      = YAML::load(File.read("config/account_info.yml")) 
+API_KEY     = CONFIG["API_KEY"]
+PROJECT_NUM = CONFIG["PROJECT_NUM"]
 DOMAIN_BASE = "https://api.crowdflower.com" || "https://api.localdev.crowdflower.com:8443"
 
 
@@ -120,7 +121,7 @@ assert job_2.units.all.size == 12
 #################################################
 say "Adding title, project number, instructions, CML"
 job_2.update({:title => 'Job_2: CrowdShopping',
-            :project_number => 'YOUR_PN',
+            :project_number => PROJECT_NUM,
             :instructions => '<p>There are six questions to this task. In this order, the questions ask if you were able to find a pair of Lita shoes for sale in red glitter, gold glitter, multi glitter, silver glitter, black glitter, or other color of glitter.</p><p>There is a photo of the shoe in correlating color as the question right below the question. It will give you a better idea of what to look for.</p>', 
             :cml => '<cml:radios label="Were you able to find an online retailer selling Jeffery Campbell Lita Booties in {{glitter_color}}?" validates="required" name="color_found" instructions="If you found the shoes we are looking for, click yes to fill in the website url."><p class="shoe-img">Example Photo: <img src="{{image}}" width="100" /></p><cml:radio label="Yes, I found an online retailer selling Lita shoes in {{glitter_color}}." value="yes"></cml:radio><cml:radio label="No, I could not find an online retailer selling Lita shoes in {{glitter_color}}." value="no"></cml:radio></cml:radios><br /><cml:text label="Please enter the name of the online retailer." default="Example: Karmaloop" validates="required" only-if="color_found:[yes]" name="please_enter_the_name_of_the_online_retailer"></cml:text><br /><cml:text label="Please enter the url to the shoes you found." default="Example: www.karmaloop.com/jeffery-campbell-litas-multiglitter" validates="required url" only-if="color_found:[yes]" name="please_enter_the_url_to_the_shoes_you_found"></cml:text>'})
 
