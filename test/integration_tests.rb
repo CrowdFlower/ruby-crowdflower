@@ -8,7 +8,6 @@ API_KEY     = CONFIG["API_KEY"]
 PROJECT_NUM = CONFIG["PROJECT_NUM"]
 DOMAIN_BASE = "https://api.crowdflower.com" || "https://api.localdev.crowdflower.com:8443"
 
-
 unless API_KEY && API_KEY.size > 3
   puts <<EOF
 
@@ -228,8 +227,8 @@ job_3.update(:title => 'Job_3: Copy of Job_2')
 assert job_3.get["title"] == "Job_3: Copy of Job_2"
 
 say "-- Waiting for CrowdFlower to process the data."
-wait_until { job_3.get["units_count"] == 13 }
-assert job_3.get["units_count"] == 13
+wait_until { job_3.get["units_count"] == 14 }
+assert job_3.get["units_count"] == 14
 
 #################################################
 # WORKER METHODS
@@ -275,7 +274,7 @@ assert job.units.judgments(447664267).count == unit.get(447664267)["judgments_co
 #################################################
 # DOWNLOAD REPORTS - missing assetions
 #################################################
-# Using the completed job from readme examples. 
+# These run against the completed job from readme examples; they print status codes as they go
 job = CrowdFlower::Job.new(418404)
 
 say "Downloading Full CSV"
