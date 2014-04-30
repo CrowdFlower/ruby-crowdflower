@@ -234,7 +234,8 @@ assert job_3.get["units_count"] == 13
 #################################################
 # WORKER METHODS
 #################################################
-say "Worker tests are based on a dummy job and a CrowdFlower employee's worker_id"
+# Worker tests run against an existing job with an internal CF worker_id number
+say "Starting Worker tests."
 job       = CrowdFlower::Job.new(422830)
 worker    = CrowdFlower::Worker.new(job) 
 worker_id = 23542619
@@ -242,9 +243,8 @@ worker_id = 23542619
 say "Notifying worker."
 worker.notify(worker_id, "Testing notify method.")
 
-# Will send a one penny bonus to worker
 say "Bonusing a worker."
-worker.bonus(worker_id, 1) 
+worker.bonus(worker_id, 1, "Here's a bonus for your awesome work!") 
 
 say "Flagging worker from one of my jobs."
 worker.flag(worker_id, "Testing flag method.", :persist => false)
@@ -253,11 +253,7 @@ say "Flagging worker from all my jobs."
 worker.flag(worker_id, "Testing flag method across all jobs.", :persist => true)
 
 say "Deflagging worker."
-worker.deflag(worker_id, "Testing deflag method.") 
-
-# Be careful if testing the reject method; cannot be undone
-# say "Rejecting worker."
-# worker.reject(worker_id)
+worker.deflag(worker_id, "Testing deflag method.")
 
 #################################################
 # JUDGMENT METHODS 
