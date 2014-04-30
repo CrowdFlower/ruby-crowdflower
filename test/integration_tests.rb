@@ -308,36 +308,3 @@ say ">-< Tests complete. >-<"
 # Return every judgment for the given unit
 # job.units.judgments(unit_id_number) 
 # job.units.judgments(444154130) 
-
-#################################################
-# UNUSUAL API_KEY TESTS 
-#################################################
-# say "defining multiple api keys"
-# (job_subclass_with_valid_custom_key = Class.new(CrowdFlower::Job)).connect! API_KEY, DOMAIN_BASE
-# (job_subclass_with_invalid_custom_key = Class.new(CrowdFlower::Job)).connect! 'invalid api key', DOMAIN_BASE
-# job_subclass_with_no_custom_key = Class.new(CrowdFlower::Job)
-
-# say "no default api key"
-# assert_exception_raised(CrowdFlower::UsageError) {CrowdFlower::Job.create("job creation should fail")}
-# assert_exception_raised(CrowdFlower::UsageError) {job_subclass_with_no_custom_key.create("job creation should fail")}
-# assert_exception_raised(CrowdFlower::APIError) {job_subclass_with_invalid_custom_key.create("job creation should fail")}
-# assert job_subclass_with_valid_custom_key.create("should be ok").units.ping['count']
-
-# say "invalid default api key"
-# CrowdFlower.connect! "invalid default api key", DOMAIN_BASE
-# assert_exception_raised(CrowdFlower::APIError) {CrowdFlower::Job.create("job creation should fail")}
-# assert_exception_raised(CrowdFlower::APIError) {job_subclass_with_no_custom_key.create("job creation should fail")}
-# assert_exception_raised(CrowdFlower::APIError) {job_subclass_with_invalid_custom_key.create("job creation should fail")}
-# assert job_subclass_with_valid_custom_key.create("should be ok").units.ping['count']
-
-#################################################
-# API_KEY W/ JOB_SUBCLASS 
-#################################################
-# say "Connecting to the API"
-# CrowdFlower.connect! API_KEY, DOMAIN_BASE
-# assert CrowdFlower::Job.create("should be ok").units.ping['count']
-# assert job_subclass_with_no_custom_key.create("should be ok").units.ping['count']
-# assert job_subclass_with_valid_custom_key.create("should be ok").units.ping['count']
-# assert_exception_raised(CrowdFlower::APIError) {job_subclass_with_invalid_custom_key.create("job creation should fail")}
-# Add this test to check your URL
-#assert CrowdFlower::Base.connection.public_url == "localdev.crowdflower.com:80"
