@@ -290,10 +290,10 @@ say "Downloading Test Questions CSV"
 job.download_csv(:gold_report, "gold_report.zip")  
 
 say "Downloading Worker CSV"
-job_2.download_csv(:workset, "workset_report.zip")   
+job.download_csv(:workset, "workset_report.zip")   
 
 say "Downloading JSON"
-job_2.download_csv(:json, "json_report.zip") 
+job.download_csv(:json, "json_report.zip") 
 
 #################################################
 # END OF TESTS
