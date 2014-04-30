@@ -160,28 +160,34 @@ wait_until { job_2.get["state"].casecmp('running') == 0}
 assert job_2.channels["enabled_channels"] == ["cf_internal"]
 
 #################################################
-# UNIT METHODS * correct spelling error (judgeable not judgable) all states use "judgable" :(
+# UNIT METHODS
 #################################################
 say "Setting up units."
 unit_1 = job_2.units.all.to_a[0][0]
 unit_2 = job_2.units.all.to_a[1][0]
 
 unit = CrowdFlower::Unit.new(job_2)
-wait_until { unit.get(unit_1)['state'] == 'judgable' }
+wait_until { unit.get(unit_1)["state"] == "judgable" }
 p "unit_1 id: #{unit_1}"
-wait_until { unit.get(unit_1)['state'] == 'judgable' }
+wait_until { unit.get(unit_1)["state"] == "judgable" }
 p "unit_2 id: #{unit_2}"
 
 say "Making unit_1 a test question (gold)."
 unit.make_gold(unit_1)
+assert unit.get(unit_1)["state"] == "golden"
 
 say "Copying unit_2."
 unit.copy(unit_2, job_2_id, "glitter_color"=>"blue")
 assert job_2.get["units_count"] == 13
 
+say "Creating a new test question unit."
+unit.create({"glitter_color"=>"white"}, true)
+assert job_2.get["units_count"] == 14
+assert job_2.get["golds_count"] == 2
+
 say "Canceling unit_2."
 unit.cancel(unit_2)
-assert unit.get(unit_2)['state'] == 'canceled'
+assert unit.get(unit_2)["state"] == "canceled"
 
 #################################################
 # PAUSE/ RESUME/ CANCEL JOB
@@ -226,7 +232,7 @@ wait_until { job_3.get["units_count"] == 13 }
 assert job_3.get["units_count"] == 13
 
 #################################################
-# WORKER METHODS - missing assertions
+# WORKER METHODS
 #################################################
 say "Worker tests are based on a dummy job and a CrowdFlower employee's worker_id"
 job       = CrowdFlower::Job.new(422830)
@@ -252,6 +258,23 @@ worker.deflag(worker_id, "Testing deflag method.")
 # Be careful if testing the reject method; cannot be undone
 # say "Rejecting worker."
 # worker.reject(worker_id)
+
+#################################################
+# JUDGMENT METHODS 
+#################################################
+# Judgment tests run against the same job as Worker tests
+say "Starting Judgment tests."
+judgment = CrowdFlower::Judgment.new(job) 
+unit = CrowdFlower::Unit.new(job)
+
+say "Getting all judgments for job #422830."
+assert judgment.all.count == job.get["judgments_count"]
+
+say "Checking the judgment number to test judgment.get method."
+assert judgment.get(1243027889)["judgment"] == 1
+
+say "Checking the number of judgments for a unit to see if a unit's judgment info can be returned."
+assert job.units.judgments(447664267).count == unit.get(447664267)["judgments_count"]
 
 #################################################
 # DOWNLOAD REPORTS - missing assetions
@@ -281,30 +304,3 @@ job_2.download_csv(:json, "json_report.zip")
 # END OF TESTS
 #################################################
 say ">-< Tests complete. >-<"
-
-#################################################
-# COME BACK TO THESE:
-#################################################
-# MORE UNIT METHODS
-  # say "Updating the unit."
-  # unit.update(unit_id, "glitter_color"=>"green")
-  # say "Spliting the unit on delimeter."
-  # unit.split(on, with = " ")
-  # say "Requesting more judgments for the unit."
-  # unit.request_more_judgments(unit_id, 6)
-  # say "Creating a new unit as a test question."
-  # unit.create("glitter_color"=>"orange", gold: true) 
-  # Does deleting a unit do anything??? Still shows in total unit count, still shows in unit data and state says "canceled"
-  # say "Deleting the unit."
-  # unit.delete(unit_2)
-
-#################################################
-# JUDGMENT METHODS 
-#################################################
-# judgment = CrowdFlower::Judgment.new(job) 
-# judgment.all
-# judgment.get(judgment_id)
-# judgment.get(1239592918)
-# Return every judgment for the given unit
-# job.units.judgments(unit_id_number) 
-# job.units.judgments(444154130) 
