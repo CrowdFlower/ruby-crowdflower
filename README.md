@@ -152,9 +152,19 @@ job.upload("crowdshopping.csv", "text/csv")
 #####CHANNELS: http://api.crowdflower.com/v1/jobs/418404/channels
 
 ```ruby
-job.channels 
+# view all enabled channels and available channels:
+job.channels
+
+# view only the enabled ones: 
+job.channels["enabled_channels"] 
+
+# turn on specific channels:
 job.enable_channels(channels)
-job.enable_channels("cf_internal")
+job.enable_channels(["4x4bux_com", "abitback", "aceinnovations"])
+
+# turn off a specific channel (does not take an array like enable_chanels):
+job.disable_channel(channel_name)
+job.disable_channel("4x4bux_com")
 ```
 
 #####TAGS: https://api.crowdflower.com/jobs/418404/tags

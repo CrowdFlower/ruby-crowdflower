@@ -127,6 +127,10 @@ module CrowdFlower
       connection.post("#{resource_uri}/#{@id}/channels", {:body => { :channels => channels } } )
     end
 
+    def disable_channel(channel_name)
+      connection.post("#{resource_uri}/#{@id}/disable_channel", {:body => { :channel_name => channel_name } } )
+    end
+
     def tags
       connection.get("#{resource_uri}/#{@id}/tags") 
     end

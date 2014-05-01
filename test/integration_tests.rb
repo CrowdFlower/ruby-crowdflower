@@ -154,9 +154,17 @@ p "job_2 enabled_channels: #{job_2.channels["enabled_channels"]}"
 #################################################
 say "Ordering (launching) job_2 with 12 units."
 order = CrowdFlower::Order.new(job_2)
-order.debit(12, "channel"=>"cf_internal")
+order.debit(12, ["4x4bux_com", "bitcoinget", "cf_internal"])
 wait_until { job_2.get["state"].casecmp('running') == 0}
-assert job_2.channels["enabled_channels"] == ["cf_internal"]
+# turning channels from on_demand work force adds "on_demand" to enabled_channels
+assert job_2.channels["enabled_channels"] == ["4x4bux_com", "bitcoinget", "cf_internal", "on_demand"]
+
+#################################################
+# DISABLE A CHANNEL
+#################################################
+say "Disabling 'bitcoinget' channel."
+job_2.disable_channel("bitcoinget")
+assert job_2.channels["enabled_channels"] == ["4x4bux_com", "cf_internal", "on_demand"]
 
 #################################################
 # UNIT METHODS
