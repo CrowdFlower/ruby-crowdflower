@@ -40,7 +40,7 @@ CrowdFlower.connect!( 'CrowdFlower.yaml' )
 ```
 
 ## Usage and Examples 
-#####[Example Job](https://api.crowdflower.com/v1/jobs/418404/) - referenced throught the following examples (must be signed in to view). 
+#####This [job](https://api.crowdflower.com/v1/jobs/418404/) is referenced throughout the following examples (must be signed in to view). 
 
 ### Access Job Info
 
@@ -76,17 +76,17 @@ require 'crowdflower'
 
 API_KEY = "YOUR_API_KEY"
 DOMAIN_BASE = "https://api.crowdflower.com"
-JOB_ID = 418404
 
 CrowdFlower::Job.connect! API_KEY, DOMAIN_BASE
 
+job_id  = 418404
 job_one = CrowdFlower::Job.new(job_id)
 job_two = job_one.copy
 ```
 
 ### Available Features (Methods)
 
-#####GET - https://crowdflower.com/jobs/418404.json
+#####GET: Example job's JSON, which the GET method has access to: https://crowdflower.com/jobs/418404.json
 
 ```ruby
 job.get["css"]
@@ -141,14 +141,15 @@ job.get["custom_key"]
 job.get["options"]
 ```
 
-#####UPLOAD (data to create units) 
+#####UPLOAD: upload a file to create the data (or units) in your job.
 
 ```ruby
+# opts can be used to force an upload
 job.upload(filename, type, opts)
 job.upload("crowdshopping.csv", "text/csv")
 ```
 
-#####CHANNELS - http://api.crowdflower.com/v1/jobs/418404/channels
+#####CHANNELS: http://api.crowdflower.com/v1/jobs/418404/channels
 
 ```ruby
 job.channels 
@@ -156,7 +157,7 @@ job.enable_channels(channels)
 job.enable_channels("cf_internal")
 ```
 
-#####TAGS - https://api.crowdflower.com/jobs/418404/tags
+#####TAGS: https://api.crowdflower.com/jobs/418404/tags
 
 ```ruby
 tags = "shoes", "shopping", "fashion"
@@ -199,8 +200,13 @@ unit.judgments(444154130)
 #####UNIT.CREATE: Create a new unit.
 
 ```ruby
+unit.create(data, gold = false)
+
+# normal unit
 unit.create("glitter_color"=>"blue") 
-unit.create("glitter_color"=>"blue", gold: true) 
+
+# test question (gold) unit
+unit.create("glitter_color"=>"blue", true) 
 ```
 
 #####UNIT.COPY: Copy an existing unit.
@@ -213,7 +219,7 @@ unit.copy(444154130, 418404, "glitter_color"=>"blue")
 #####UNIT.SPLIT: In cases where multiple values are stored in the cells of the same column, you can use the Split Column function to parse the data into two or more columns by specifying a delimiter (most typically a newline character).
 
 ```ruby
-unit.split(on, with = " ")
+unit.split(on, with = ", ")
 ```
 
 #####UNIT.UPDATE: Update the value of a unit's key.  
@@ -241,7 +247,7 @@ unit.cancel(unit_id)
 unit.delete(unit_id)
 ```
 
-#####UNIT.REQUEST_MORE_JUDGMENTS: Get more answers (judgments) for a specific unit by using this method with the unit's id and the amount of requested judgments passed as params. 
+#####UNIT.REQUEST_MORE_JUDGMENTS: Pass in the unit id and the number of additional judgments needed.
 
 ```ruby
 unit.request_more_judgments(unit_id, nb_judgments = 1)
@@ -253,29 +259,26 @@ unit.request_more_judgments(unit_id, nb_judgments = 1)
 order = CrowdFlower::Order.new(job)
 ```
 
-#####ORDER.DEBIT: When a job has data (units) and properly working cml, it is ready to launch. The launch tab on the job dashboard is the same as calling order.debit. 
+#####ORDER.DEBIT: This is the same as clicking launch from the job dashboard; your job must have at least 5 units and CML form elements for this to work. 
 
 ```ruby
-# defaults to on_demand channels
-order.debit(units_count, channels = ["on_demand"])
-
-# pass in specific channel name to launch job w/ that channel
+order.debit(units_count, channels)
 order.debit(6, "cf_internal")
 ```
 
-#####PAUSE: Only can be called on running jobs.
+#####PAUSE: Can only be called on running jobs.
 
 ```ruby
 job.pause
 ```
 
-#####RESUME: Only can be called on paused or completed jobs.
+#####RESUME: Can only be called on paused or completed jobs.
 
 ```ruby
 job.resume
 ```
 
-#####CANCEL: Only can be called on paused jobs.
+#####CANCEL: Can only be called on paused jobs.
 
 ```ruby
 job.cancel
@@ -300,60 +303,64 @@ job.delete
 worker = CrowdFlower::Worker.new(job) 
 ```
 
-#####WORKER.BONUS: Award a bonus in cents, 200 for $2.00 and (optionally) add a message
+#####WORKER.BONUS: Award a bonus in cents, 200 for $2.00 and optionally, add a message.
 
 ```ruby
 worker.bonus(worker_id, amount, reason=nil)
-worker.bonus(23542619, 200, "You shoe shop like a pro! Thanks for the awesome answers!")
+worker.bonus(99999999, 200, "You shoe shop like a pro! Here's a bonus for the awesome answers!")
 ```
 
-#####WORKER.REJECT: This method is only available to Pro and Enterprise users. Calling worker.reject stops a contributor from completing tasks and removes the contributor's judgments. It's best used when a job is still running because a completed job is unable to collect replacement judgments. 
+#####WORKER.REJECT: This method is only available to Pro and Enterprise users. Calling worker.reject stops a contributor from completing tasks and removes the contributor's judgments. It is best used when a job is still running as a completed job cannot collect new judgments to replace the rejected ones. 
 
 ```ruby
 worker.reject(worker_id)
-worker.reject(14952322)
+worker.reject(99999999)
 ```
 
-#####WORKER.NOTIFY: Sends a notification to a specific contributor. The contributor will see the message under their notifications. 
+#####WORKER.NOTIFY: Sends a message to the specified contributor; appears in the contributor's dashboard notifications. 
 
 ```ruby
-worker.notify(worker_id, subject, message)
-worker.notify(23542619, "you earned a bonus!", "good job!")
+worker.notify(worker_id, message)
+worker.notify(99999999, "Thanks for working on this task!")
 ```
 
-#####WORKER.FLAG: Stops contributors from completing tasks. Their judgments remain in their current state of tainted or non-tainted and will not be thrown away.
+#####WORKER.FLAG: Prevents a contributor from completing a task; judgments remain in their current state and will not be thrown away.
 
 ```ruby
-worker.flag(worker_id, reason=nil)
-worker.flag(14952322, "testing")
+worker.flag(worker_id, reason = nil, persist = false)
+worker.flag(99999999, "Flagging worker from this job.")
+
+# persist = true flags the contributor from all of your jobs
+worker.flag(worker_id, reason = nil, persist = true)
+worker.flag(99999999, "Flaging worker from all my jobs.")
 ```
 
-#####WORKER.DEFLAG: Allows a flagged contributor to continue completing tasks.
+#####WORKER.DEFLAG: Removes flag and allows contributor to continue work.
 ```ruby
-worker.deflag(worker_id)
-worker.deflag(14952322)
+worker.deflag(worker_id, reason)
+worker.deflag(99999999, "Worker was mistakenly flagged.")
 ```
 
-#####JUDGMENTS - http://api.crowdflower.com/v1/jobs/418404/units/judgments
+#####JUDGMENTS: http://api.crowdflower.com/v1/jobs/418404/units/judgments
 
 ```ruby
 judgment = CrowdFlower::Judgment.new(job) 
 judgment.all
 judgment.get(judgment_id)
-judgment.get(1239592918)
+judgment.get(9999999999)
 
 # Return every judgment for the given unit
 job.units.judgments(unit_id_number) 
-job.units.judgments(444154130) 
+job.units.judgments(9999999999) 
 ```
 
-#####LEGEND: Returns all of the cml in a job; shows all questions and available answers, see example: http://api.crowdflower.com/v1/jobs/418404/legend.
+#####LEGEND: Returns all the job's CML - http://api.crowdflower.com/v1/jobs/418404/legend
 
 ```ruby
 job.legend
 ```
 
-#####STATUS: parsed JSON response or access attributes like GET
+#####STATUS: Returns a list of JSON unit and judgment attributes. 
 
 ```ruby
 job.status
@@ -368,11 +375,16 @@ job.status["completed_gold_estimate"]
 job.status["ordered_units"]
 ```
 
-#####DOWNLOAD_CSV: Downloads a CSV of the job with results, sometimes as csv and sometimes as a zip containing the CSV.
+#####DOWNLOAD_CSV: Download a zip file containing a CSV or JSON report, depending which one you specify. Below are examples of the available reports:
 
 ```ruby
-job.download_csv(type, filename, opts) 
-job.download_csv(full, nil, force:true)
+job.download_csv(type, filename) 
+job.download_csv(:full, 'full_report.zip')
+job.download_csv(:aggregated, 'aggregated_report.zip')
+job.download_csv(:source, 'source_report.zip')
+job.download_csv(:gold_report, 'gold_report.zip')
+job.download_csv(:workset, 'workset_report.zip')
+job.download_csv(:json, 'json_report.zip')
 ```
 
 ## Helpful Documentation Links
