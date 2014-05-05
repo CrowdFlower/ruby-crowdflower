@@ -1,0 +1,5 @@
+# This file can be used for running your job and for running the integration tests
+# Rename this yaml template to "account_info.yml" or update the .gitignore file so it will not be pushed to github
+
+API_KEY:      add your api key here
+PROJECT_NUM:  add your project number here
