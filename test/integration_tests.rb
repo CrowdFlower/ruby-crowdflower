@@ -8,6 +8,7 @@ API_KEY     = CONFIG["API_KEY"]
 PROJECT_NUM = CONFIG["PROJECT_NUM"]
 DOMAIN_BASE = "https://api.crowdflower.com" || "https://api.localdev.crowdflower.com:8443"
 
+CrowdFlower::Job.connect! API_KEY, DOMAIN_BASE
 unless API_KEY && API_KEY.size > 3
   puts <<EOF
 
@@ -242,7 +243,7 @@ assert job_3.get["units_count"] == 14
 # WORKER METHODS
 #################################################
 # Worker tests run against an existing job with an internal CF worker_id number
-say "Starting Worker tests."
+say "Starting Worker tests for job #422830."
 job       = CrowdFlower::Job.new(422830)
 worker    = CrowdFlower::Worker.new(job) 
 worker_id = 23542619
@@ -266,11 +267,11 @@ worker.deflag(worker_id, "Testing deflag method.")
 # JUDGMENT METHODS 
 #################################################
 # Judgment tests run against the same job as Worker tests
-say "Starting Judgment tests."
+say "Starting Judgment tests for job #422830."
 judgment = CrowdFlower::Judgment.new(job) 
 unit = CrowdFlower::Unit.new(job)
 
-say "Getting all judgments for job #422830."
+say "Getting all judgments."
 assert judgment.all.count == job.get["judgments_count"]
 
 say "Checking the judgment number to test judgment.get method."
@@ -283,6 +284,7 @@ assert job.units.judgments(447664267).count == unit.get(447664267)["judgments_co
 # DOWNLOAD REPORTS - missing assetions
 #################################################
 # These run against the completed job from readme examples; they print status codes as they go
+say "Startiing report tests for job #418404."
 job = CrowdFlower::Job.new(418404)
 
 say "Downloading Full CSV"
