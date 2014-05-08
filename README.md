@@ -167,12 +167,16 @@ job.disable_channel(channel_name)
 job.disable_channel("4x4bux_com")
 ```
 
-#####TAGS: https://api.crowdflower.com/jobs/418404/tags
+#####TAGS: https://api.crowdflower.com/v1/jobs/418404/tags
 
 ```ruby
-tags = "shoes", "shopping", "fashion"
-job.add_tags(tags)
-job.update_tags("fun", "glitter", "crowdshop")
+# add tags
+job.add_tags("shoes")
+
+# replace existing tags
+job.update_tags(["fun", "glitter", "crowdshop"])
+
+# remove specific tags
 job.remove_tags("crowdshop") 
 ```
 
