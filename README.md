@@ -236,14 +236,21 @@ unit.copy(444154130, 418404, "glitter_color"=>"blue")
 unit.split(on, with = ", ")
 ```
 
-#####UNIT.UPDATE: Update the value of a unit's key.  
+#####UNIT.UPDATE: Update attributes inside of a unit's data hash.
+######Note: The info passed to unit.update will completely replace that unit's exisiting data attributes and values. Be sure to include all the needed info for a given unit, even if just updating one attribute. Examples below. 
 
 ```ruby
-unit.update(unit_id, params)
-unit.update(444154130, "glitter_color"=>"green")
+unit.update(unit_id, :data => {"column_name"=>"column_value"})
+
+# Good Example:
+unit.update(99999999, :data => {"retailer_url"=>nil, "shoe_type"=>"Booties", "retailer_name"=>nil, "glitter_color"=>"White", "brand_name"=>"Jeffery Campbell", "image"=>"http://bit.ly/1nFX1I8", "shoe_style"=>"Lita"}) 
+
+# Bad Example (all unit info gets replaced with the glitter_color & value):
+unit.update(99999999, :data => {"glitter_color"=>"White"})
 ```
 
 #####UNIT.MAKE_GOLD: Turn an existing unit into a test question (gold) unit.
+######Note: A unit can be updated with gold answers and reasons before or after calling unit.make_gold, as long as the unit.update call is made correctly. 
 
 ```ruby
 unit.make_gold(unit_id)
