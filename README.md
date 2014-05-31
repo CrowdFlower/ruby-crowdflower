@@ -250,7 +250,6 @@ unit.update(99999999, :data => {"glitter_color"=>"White"})
 ```
 
 #####UNIT.MAKE_GOLD: Turn an existing unit into a test question (gold) unit.
-######Note: A unit can be updated with gold answers and reasons before or after calling unit.make_gold, as long as the unit.update call is made correctly. 
 
 ```ruby
 unit.make_gold(unit_id)
