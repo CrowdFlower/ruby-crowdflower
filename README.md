@@ -81,7 +81,8 @@ CrowdFlower::Job.connect! API_KEY, DOMAIN_BASE
 
 job_id  = 418404
 job_one = CrowdFlower::Job.new(job_id)
-job_two = job_one.copy
+# returns a CrowdFlower::Job object
+job_two = job_one.copy 
 ```
 
 ### Available Features (Methods)
