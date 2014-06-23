@@ -283,8 +283,8 @@ order = CrowdFlower::Order.new(job)
 #####ORDER.DEBIT: This is the same as clicking launch from the job dashboard; your job must have at least 5 units and CML form elements for this to work. 
 
 ```ruby
-order.debit(units_count, channels)
-order.debit(6, "cf_internal")
+order.debit(units_count, [channels])
+order.debit(6, ["cf_internal"])
 ```
 
 #####PAUSE: Can only be called on running jobs.
