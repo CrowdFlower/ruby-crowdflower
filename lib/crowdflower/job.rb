@@ -17,9 +17,9 @@ module CrowdFlower
       "/jobs"
     end
 
-    def self.all
+    def self.all(page = 1, limit = 10)
       connect
-      get(resource_uri)
+      get(resource_uri, {:query => {:limit => limit, :page => page}})
     end
     
     def self.upload(file, content_type, job = nil, opts = {})
