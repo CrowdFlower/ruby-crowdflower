@@ -1,6 +1,6 @@
 CrowdFlower API Gem
 ========
-Currently this is a toolkit for interacting with the CrowdFlower REST API. It may potentially become a complete Ruby gem for accessing and editing [CrowdFlower](http://crowdflower.com) jobs. 
+Currently this is a toolkit for interacting with the CrowdFlower REST API. It may potentially become a complete Ruby gem for accessing and editing [CrowdFlower](http://crowdflower.com) jobs.
 
 ## Table of Contents
 
@@ -26,7 +26,7 @@ Currently this is a toolkit for interacting with the CrowdFlower REST API. It ma
     $ gem install crowdflower
 
 #####And require the gem in your ruby file as:
-    
+
     require 'crowdflower'
 
 This gem makes use of [CrowdFlower's API](http://success.crowdflower.com/customer/portal/articles/1288323-api-documentation). To find your API key, click on your name in the upper right hand corner and select "Account" from the drop down. To create an account click [here](https://id.crowdflower.com/registrations/new?redirect_url=https%3A%2F%2Fcrowdflower.com%2Fjobs&app=make&__hssc=14529640.6.1397164984954&__hstc=14529640.8f31cd290788fdc43f4da6707700cde6.1396463439689.1397160539873.1397164984954.16&hsCtaTracking=c85b8d58-818e-4f19-a27e-83e8f55da890%7C583ca9bc-a025-43b9-806a-b329df96a8c6).
@@ -39,8 +39,8 @@ API_KEY = "YOUR_API_KEY"
 CrowdFlower.connect!( 'CrowdFlower.yaml' )
 ```
 
-## Usage and Examples 
-#####This [job](https://api.crowdflower.com/v1/jobs/418404/) is referenced throughout the following examples (must be signed in to view). 
+## Usage and Examples
+#####This [job](https://api.crowdflower.com/v1/jobs/418404/) is referenced throughout the following examples (must be signed in to view).
 
 ### Access Job Info
 
@@ -82,7 +82,7 @@ CrowdFlower::Job.connect! API_KEY, DOMAIN_BASE
 job_id  = 418404
 job_one = CrowdFlower::Job.new(job_id)
 # returns a CrowdFlower::Job object
-job_two = job_one.copy 
+job_two = job_one.copy
 ```
 
 ### Available Features (Methods)
@@ -127,7 +127,6 @@ job.get["order_approved"]
 job.get["minimum_requirements"]
 job.get["max_judgments_per_ip"]
 job.get["confidence_fields"]
-job.get["gold_per_assignment"]
 job.get["alias"]
 job.get["id"]
 job.get["judgments_count"]
@@ -156,8 +155,8 @@ job.upload("crowdshopping.csv", "text/csv")
 # view all enabled channels and available channels:
 job.channels
 
-# view only the enabled ones: 
-job.channels["enabled_channels"] 
+# view only the enabled ones:
+job.channels["enabled_channels"]
 
 # turn on specific channels:
 job.enable_channels(channels)
@@ -178,7 +177,7 @@ job.add_tags("shoes")
 job.update_tags(["fun", "glitter", "crowdshop"])
 
 # remove specific tags
-job.remove_tags("crowdshop") 
+job.remove_tags("crowdshop")
 ```
 
 #####UNITS: http://api.crowdflower.com/v1/jobs/418404/units
@@ -190,7 +189,7 @@ unit = CrowdFlower::Unit.new(job)
 #####UNIT.ALL: View all units or count all units in a job; same result as job.units.
 
 ```ruby
-unit.all 
+unit.all
 unit.all.count
 ```
 
@@ -218,10 +217,10 @@ unit.judgments(444154130)
 unit.create(data, gold = false)
 
 # normal unit
-unit.create("glitter_color"=>"blue") 
+unit.create("glitter_color"=>"blue")
 
 # test question (gold) unit
-unit.create("glitter_color"=>"blue", true) 
+unit.create("glitter_color"=>"blue", true)
 ```
 
 #####UNIT.COPY: Copy an existing unit.
@@ -238,13 +237,13 @@ unit.split(on, with = ", ")
 ```
 
 #####UNIT.UPDATE: Update attributes inside of a unit's data hash.
-######Note: The info passed to unit.update will completely replace that unit's exisiting data attributes and values. Be sure to include all the needed info for a given unit, even if just updating one attribute. Examples below. 
+######Note: The info passed to unit.update will completely replace that unit's exisiting data attributes and values. Be sure to include all the needed info for a given unit, even if just updating one attribute. Examples below.
 
 ```ruby
 unit.update(unit_id, :data => {"column_name"=>"column_value"})
 
 # Good Example:
-unit.update(99999999, :data => {"retailer_url"=>nil, "shoe_type"=>"Booties", "retailer_name"=>nil, "glitter_color"=>"White", "brand_name"=>"Jeffery Campbell", "image"=>"http://bit.ly/1nFX1I8", "shoe_style"=>"Lita"}) 
+unit.update(99999999, :data => {"retailer_url"=>nil, "shoe_type"=>"Booties", "retailer_name"=>nil, "glitter_color"=>"White", "brand_name"=>"Jeffery Campbell", "image"=>"http://bit.ly/1nFX1I8", "shoe_style"=>"Lita"})
 
 # Bad Example (all unit info gets replaced with the glitter_color & value):
 unit.update(99999999, :data => {"glitter_color"=>"White"})
@@ -280,7 +279,7 @@ unit.request_more_judgments(unit_id, nb_judgments = 1)
 order = CrowdFlower::Order.new(job)
 ```
 
-#####ORDER.DEBIT: This is the same as clicking launch from the job dashboard; your job must have at least 5 units and CML form elements for this to work. 
+#####ORDER.DEBIT: This is the same as clicking launch from the job dashboard; your job must have at least 5 units and CML form elements for this to work.
 
 ```ruby
 order.debit(units_count, [channels])
@@ -305,7 +304,7 @@ job.resume
 job.cancel
 ```
 
-#####UPDATE: Update any of the JSON attributes that get can access. Scroll up to GET to see the full list of accessible attributes. 
+#####UPDATE: Update any of the JSON attributes that get can access. Scroll up to GET to see the full list of accessible attributes.
 
 ```ruby
 job.update
@@ -321,7 +320,7 @@ job.delete
 #####WORKERS: http://api.crowdflower.com/v1/jobs/418404/workers
 
 ```ruby
-worker = CrowdFlower::Worker.new(job) 
+worker = CrowdFlower::Worker.new(job)
 ```
 
 #####WORKER.BONUS: Award a bonus in cents, 200 for $2.00 and optionally, add a message.
@@ -331,14 +330,14 @@ worker.bonus(worker_id, amount, reason=nil)
 worker.bonus(99999999, 200, "You shoe shop like a pro! Here's a bonus for the awesome answers!")
 ```
 
-#####WORKER.REJECT: This method is only available to Pro and Enterprise users. Calling worker.reject stops a contributor from completing tasks and removes the contributor's judgments. It is best used when a job is still running as a completed job cannot collect new judgments to replace the rejected ones. 
+#####WORKER.REJECT: This method is only available to Pro and Enterprise users. Calling worker.reject stops a contributor from completing tasks and removes the contributor's judgments. It is best used when a job is still running as a completed job cannot collect new judgments to replace the rejected ones.
 
 ```ruby
 worker.reject(worker_id)
 worker.reject(99999999)
 ```
 
-#####WORKER.NOTIFY: Sends a message to the specified contributor; appears in the contributor's dashboard notifications. 
+#####WORKER.NOTIFY: Sends a message to the specified contributor; appears in the contributor's dashboard notifications.
 
 ```ruby
 worker.notify(worker_id, message)
@@ -365,14 +364,14 @@ worker.deflag(99999999, "Worker was mistakenly flagged.")
 #####JUDGMENTS: http://api.crowdflower.com/v1/jobs/418404/units/judgments
 
 ```ruby
-judgment = CrowdFlower::Judgment.new(job) 
+judgment = CrowdFlower::Judgment.new(job)
 judgment.all
 judgment.get(judgment_id)
 judgment.get(9999999999)
 
 # Return every judgment for the given unit
-job.units.judgments(unit_id_number) 
-job.units.judgments(9999999999) 
+job.units.judgments(unit_id_number)
+job.units.judgments(9999999999)
 ```
 
 #####LEGEND: Returns all the job's CML - http://api.crowdflower.com/v1/jobs/418404/legend
@@ -381,7 +380,7 @@ job.units.judgments(9999999999)
 job.legend
 ```
 
-#####STATUS: Returns a list of JSON unit and judgment attributes. 
+#####STATUS: Returns a list of JSON unit and judgment attributes.
 
 ```ruby
 job.status
@@ -399,7 +398,7 @@ job.status["ordered_units"]
 #####DOWNLOAD_CSV: Download a zip file containing a CSV or JSON report, depending which one you specify. Below are examples of the available reports:
 
 ```ruby
-job.download_csv(type, filename) 
+job.download_csv(type, filename)
 job.download_csv(:full, 'full_report.zip')
 job.download_csv(:aggregated, 'aggregated_report.zip')
 job.download_csv(:source, 'source_report.zip')
