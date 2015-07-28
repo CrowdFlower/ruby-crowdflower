@@ -28,8 +28,8 @@ module CrowdFlower
       job_uri = job ? "/#{job.kind_of?(Job) ? job.id : job}" : ""
       conn = job.kind_of?(Job) ? job.connection : self.connection
       upload_uri = "#{resource_uri}/#{job_uri}/upload".squeeze("/")
-      res = conn.post(upload_uri, 
-        :body => File.read(file), 
+      res = conn.post(upload_uri,
+        :body => File.read(file),
         :headers => {"content-type" => content_type},
         :query => opts)
 
@@ -72,6 +72,10 @@ module CrowdFlower
     
     def status
       connection.get("#{resource_uri}/#{@id}/ping")
+    end
+    
+    def state
+      connection.get("#{resource_uri}/#{@id}")
     end
     
     def upload(file, content_type)
@@ -132,19 +136,19 @@ module CrowdFlower
     end
 
     def tags
-      connection.get("#{resource_uri}/#{@id}/tags") 
+      connection.get("#{resource_uri}/#{@id}/tags")
     end
 
     def update_tags(tags)
-      connection.put("#{resource_uri}/#{@id}/tags", {:body => { :tags => tags } } ) 
+      connection.put("#{resource_uri}/#{@id}/tags", {:body => { :tags => tags } } )
     end
 
     def add_tags(tags)
-      connection.post("#{resource_uri}/#{@id}/tags", {:body => { :tags => tags } } ) 
+      connection.post("#{resource_uri}/#{@id}/tags", {:body => { :tags => tags } } )
     end
 
     def remove_tags(tags)
-      connection.delete("#{resource_uri}/#{@id}/tags", {:body => { :tags => tags } } ) 
+      connection.delete("#{resource_uri}/#{@id}/tags", {:body => { :tags => tags } } )
     end
   end
 end

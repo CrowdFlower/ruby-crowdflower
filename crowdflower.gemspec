@@ -6,7 +6,7 @@
 
 Gem::Specification.new do |s|
   s.name = "crowdflower"
-  s.version = "0.12.0"
+  s.version = "0.12.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib"]
@@ -56,4 +56,3 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<httparty>, [">= 0.7.4"])
   end
 end
-
